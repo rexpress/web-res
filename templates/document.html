@@ -1,0 +1,75 @@
+{% extends "/layout/default.html" %}
+{% set doc = rows[0].doc %}
+{% set author = rows[1].doc %}
+
+
+{% block head %}
+	{{ super() }}
+
+	<link rel="stylesheet" type="text/css" href="../../css/document.css">
+{% endblock %}
+
+
+{% block content %}
+<section id="meta">
+	<div class="first">
+		<h2>
+			{{ doc.name|e }}
+			<i class="heart fa fa-heart-o" aria-hidden="true"></i>
+		</h2>
+
+		<div class="sub">
+			<img class="profile" src="https://avatars.githubusercontent.com/u/{{ author.social_id|e }}?size=44">
+			<span class="author-name">{{ author.name|e }}</span>
+			<span class="datetime">{{ doc.created|e }}</span>
+		</div>
+	</div>
+
+	<div class="second">
+		<div id="description">
+			{{ doc.description|e|replace('\n', '<br>') }}
+		</div>
+
+		{% if doc.envs %}
+		<div id="tags">
+			{% for env in doc.envs : %}
+			<span class="tag">
+				<i class="fa fa-tag" aria-hidden="true"></i>
+				<span>{{ env|e }}</span>
+			</span>
+			{% endfor %}
+		</div>
+		{% endif %}
+	</div>
+</section>
+
+{% if doc.properties %}
+<section id="properties">
+	<h3>properties</h3>
+	<ul>
+		{% for prop in doc.properties %}
+		<li class="clearfix">
+			<div class="fl first">
+				{{ prop.name|e }}
+			</div>
+			<div class="fl second">
+				{{ prop.value|e }}
+			</div>
+		</li>
+		{% endfor %}
+	</ul>
+</section>
+{% endif %}
+
+
+<section id="input">
+	<h3>input</h3>
+	<pre>{{ doc.input|e }}</pre>
+</section>
+
+<section id="output">
+	<h3>output</h3>
+	<pre>{{ doc.output|e }}</pre>
+</section>
+
+{% endblock %}

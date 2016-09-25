@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<site>
+	{% for row in model.get('/test/_design/share-view/_view/share-list').rows %}
+	<page>
+		<url>/doc/{{ row.id }}/</url>
+		<context>
+			{{
+				model.get(
+					api = '/test/_design/share-view/_view/share?keys=["' + row.id +'"]&include_docs=true',
+					immutable = True
+				)
+			}}
+		</context>
+		<template>document.html</template>
+	</page>
+	{% endfor %}
+</site>

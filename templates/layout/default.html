@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+	{% block head %}
+	<title>{% block title %}{% endblock %}</title>
+	
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=1024">
+
+
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../../css/common.css">
+	{% endblock %}
+</head>
+<body>
+	<header>
+		<a href="/">
+			<div id="logo">
+				<span class="hidden2">regular.express</span>
+			</div>
+		</a>
+	</header>
+	
+	<div id="content">
+		{% block content %}{% endblock %}
+	</div>
+
+	<footer>
+		Copyright &copy; 2016 regular.express All rights reserved.<br>
+	</footer>
+</body>
+</html>
