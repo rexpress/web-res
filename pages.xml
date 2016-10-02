@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <site>
-	{% for row in model.get('/test/_design/share-view/_view/share-list').rows %}
+	{% set share_list = model.get('/test/_design/share-view/_view/share-list?include_docs=true') %}
+
 	<page>
-		<url>/doc/{{ row.id }}/</url>
+		<url>/</url>
+		<context>{{ share_list }}</context>
+		<template>home.html</template>
+	</page>
+
+	{% for row in share_list.rows %}
+	<page>
+		<url>/share/{{ row.id }}/</url>
 		<context>
 			{{
 				model.get(

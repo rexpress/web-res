@@ -56,18 +56,49 @@ html, body, pre{
 
 
 /* layout/default */
-html, body{ background-color: #f0f0f0; }
 
 header{
 	padding: 15px 40px;
+	background-color: #0d2748;
 }
 
 header #logo{
 	width: 200px;
 	height: 38px;
-	background-image: url('../images/logo.png');
+}
+
+header #logo a{
+	display: inline-block;
+	*zoom: 1;
+	width: inherit;
+	height: inherit;
+}
+
+header #logo #logo-content{
+	width: inherit;
+	height: inherit;
+	background-image: url('../images/logo-white.png');
 	background-repeat: no-repeat;
 	background-size: 200px;
+}
+
+header ul#gnb{
+	list-style: none;
+	margin: 10px 0 0 40px;
+	padding: 0;
+}
+
+header ul#gnb li{
+	margin: 0 13px;
+	padding: 0;
+	float: left;
+}
+
+header ul#gnb li a{
+	color: white;
+	text-decoration: none;
+	font-size: 14px;
+	color: #ccc;
 }
 
 
@@ -78,3 +109,12 @@ footer{
 	padding: 20px;
 }
 
+
+.tag{
+	background-color: #777;
+	color: white;
+	border-radius: 3px;
+	padding: 3px 7px;
+	margin-right: 4px;
+	font-size: 12px;
+}

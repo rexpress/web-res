@@ -1,0 +1,155 @@
+{% extends "/layout/default.html" %}
+
+{% block title %} regular.express {% endblock %}
+
+{% block head %}
+	{{ super() }}
+
+	<link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/home.css">
+{% endblock %}
+
+
+{% block content %}
+<section id="welcome">
+	<h1>
+		Test and share regular expressions with simple tool<br>
+		running in fully isolated environment
+	</h1>
+
+	<div class="buttons">
+		<a href="/dowload">download</a>
+	</div>
+
+	<div class="screenshot">
+		<img src="https://placehold.it/700x300">
+	</div>
+</section>
+
+<section id="search">
+	<div id="search-bar">
+		<input type="text" name="search" placeholder="Search for regex test result of modules">
+		<i class="fa fa-search" aria-hidden="true"></i>
+	</div>
+</section>
+
+
+<section id="news">
+	<h2>New sharings</h2>
+	
+	<i class="fa fa-chevron-left prev-btn"></i>
+	<i class="fa fa-chevron-right next-btn"></i>
+
+	<div class="groups clearfix">
+		<section>
+			<div class="header color-python">
+				<h3>
+					<i class="devicon-python-plain"></i>
+					<span>python</span>
+				</h3>
+			</div>
+			<ul class="items">
+				<li>
+					<h4>phone number replace</h4>
+					<div class="description">Testing simple regex. Replace phone number like '010-1234-5678' to '01012345678'</div>
+					<div class="author">by youngsoo lee</div>
+					<div class="tags">
+						<span class="tag">
+							<i class="fa fa-tag" aria-hidden="true"></i>
+							<span>python3.4</span>
+						</span>
+					</div>
+					<ul class="properties">
+						<li>
+							<span class="key">match</span>
+							<span class="value">(0[0-9]{2})-([0-9]{3,4})-([0-9]{3,4})</span>
+						</li>
+						<li>
+							<span class="key">replace</span>
+							<span class="value">$1$2$3</span>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<h4>hello world</h4>
+					<div class="description">print hello world in python</div>
+					<div class="author">by youngsoo lee</div>
+					<div class="tags">
+						<span class="tag">
+							<i class="fa fa-tag" aria-hidden="true"></i>
+							<span>python3.3</span>
+						</span>
+					</div>
+				</li>
+
+			</ul>
+		</section>
+
+
+		<section>
+			<div class="header color-java">
+				<h3>
+					<i class="devicon-java-plain"></i>
+					<span>java</span>
+				</h3>
+			</div>
+			<ul class="items">
+				<li>
+					<h4>phone number replace</h4>
+					<div>Testing simple regex. Replace phone number like '010-1234-5678' to '01012345678'</div>
+					<div>by youngsoo lee</div>
+				</li>
+				<li>
+					<h4>hello world</h4>
+					<div>print hello world in python</div>
+					<div>by youngsoo lee</div>
+				</li>
+			</ul>
+		</section>
+	</div>
+</section>
+
+
+<section id="environments">
+	<h2>Environment Supports</h2>
+	<div class="description">
+		You can test regular expression in various environments.<br>
+		Each environment is enclosed with docker.
+	</div>
+
+	<ul class="clearfix">
+		<li>
+			<i class="devicon-java-plain-wordmark"></i>
+		</li>
+		<li>
+			<i class="devicon-python-plain-wordmark"></i>
+		</li>
+		<li>
+			<i class="devicon-apache-line-wordmark"></i>
+		</li>
+		<li class="with-text">
+			<i class="devicon-apache-plain"></i>
+			<span>flume</span>
+		</li>
+		<li>
+			<i class="devicon-nginx-original"></i>
+		</li>
+	</ul>
+
+</section>
+
+
+<!--
+<section style="margin: 100px 50px">
+	<h2>Temp urls</h2>
+	<ul>
+		{% for row in rows %}
+		<li>
+			<a href="/share/{{ row.id }}">{{ row.doc.name }}</a>
+		</li>
+		{% endfor %}
+	</ul>
+</section>-->
+
+
+{% endblock %}

@@ -6,7 +6,7 @@
 {% block head %}
 	{{ super() }}
 
-	<link rel="stylesheet" type="text/css" href="../../css/document.css">
+	<link rel="stylesheet" type="text/css" href="/css/document.css">
 {% endblock %}
 
 
@@ -49,10 +49,10 @@
 	<ul>
 		{% for prop in doc.properties %}
 		<li class="clearfix">
-			<div class="fl first">
+			<div class="fl key">
 				{{ prop.name|e }}
 			</div>
-			<div class="fl second">
+			<div class="fl value">
 				{{ prop.value|e }}
 			</div>
 		</li>

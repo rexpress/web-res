@@ -12,16 +12,32 @@
 	<link rel="shortcut icon" href="/favicon.ico">
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="../../css/common.css">
+	<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 	{% endblock %}
 </head>
 <body>
-	<header>
-		<a href="/">
-			<div id="logo">
-				<span class="hidden2">regular.express</span>
-			</div>
-		</a>
+	<header class="clearfix">
+		<div id="logo" class="fl">
+			<a href="/">
+				<div id="logo-content">
+					<span class="hidden2">regular.express</span>
+				</div>
+			</a>
+		</div>
+
+		<ul id="gnb" class="fl clearfix">
+			<li>
+				<a href="/">INTRODUCE</a>
+			</li>
+			<li>
+				<a href="/doc">DOCUMENTATION</a>
+			</li>
+			<li>
+				<a href="/env">ENVIRONMENTS</a>
+			</li>
+		</ul>
 	</header>
 	
 	<div id="content">
