@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <site>
-	{% set share_list = model.get('/test/_design/share-view/_view/share-list?include_docs=true') %}
-
+	{% set news = model.get('/test/_design/share-view/_view/news?include_docs=true&descending=true') %}
 	<page>
 		<url>/</url>
-		<context>{{ share_list }}</context>
+		<context type="json">
+			{{ json.dumps( dict(
+				news = group(
+					news.rows,
+					('key', 1),
+					('key', 2)
+				)
+			)) }}
+		</context>
 		<template>home.html</template>
 	</page>
 
-	{% for row in share_list.rows %}
+	{% for row in model.get('/test/_design/share-view/_view/share-list?include_docs=true').rows %}
 	<page>
 		<url>/share/{{ row.id }}/</url>
 		<context>

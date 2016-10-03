@@ -41,71 +41,55 @@
 	<i class="fa fa-chevron-right next-btn"></i>
 
 	<div class="groups clearfix">
+		{% for gname, shares in news.items() %}
 		<section>
-			<div class="header color-python">
+			<div class="header color-{{ gname|e }}">
 				<h3>
-					<i class="devicon-python-plain"></i>
-					<span>python</span>
+					<i class="devicon-{{ gname|e }}-plain"></i>
+					<span>{{ gname|e }}</span>
 				</h3>
 			</div>
 			<ul class="items">
+			{% for id, val in shares.items() %}
+				{% set doc = val[0].doc %}
+				{% set author = val[1].doc %}
+
 				<li>
-					<h4>phone number replace</h4>
-					<div class="description">Testing simple regex. Replace phone number like '010-1234-5678' to '01012345678'</div>
-					<div class="author">by youngsoo lee</div>
-					<div class="tags">
-						<span class="tag">
-							<i class="fa fa-tag" aria-hidden="true"></i>
-							<span>python3.4</span>
-						</span>
+					<h4>
+						<a href="/share/{{ doc._id }}">{{ doc.title | e }}</a>
+					</h4>
+					<div class="description">{{ doc.description | e }}</div>
+					<div class="author">
+						<img class="profile" src="https://avatars.githubusercontent.com/u/{{ author.social_id|e }}?size=25">
+						<span class="author-name">{{ author.name|e }}</span>
 					</div>
+					<div class="tags">
+						{% for env in doc.envs : %}
+						<a href="/tag/{{ env|e }}">
+							<span class="tag">
+								<i class="fa fa-tag" aria-hidden="true"></i>
+								<span>{{ env|e }}</span>
+							</span>
+						</a>
+						{% endfor %}
+					</div>
+
+					{% if doc.properties %}
 					<ul class="properties">
+						{% for prop in doc.properties %}
 						<li>
-							<span class="key">match</span>
-							<span class="value">(0[0-9]{2})-([0-9]{3,4})-([0-9]{3,4})</span>
+							<span class="key">{{ prop.name|e }}</span>
+							<span class="value">{{ prop.value|e }}</span>
 						</li>
-						<li>
-							<span class="key">replace</span>
-							<span class="value">$1$2$3</span>
-						</li>
+						{% endfor %}
 					</ul>
-				</li>
-				<li>
-					<h4>hello world</h4>
-					<div class="description">print hello world in python</div>
-					<div class="author">by youngsoo lee</div>
-					<div class="tags">
-						<span class="tag">
-							<i class="fa fa-tag" aria-hidden="true"></i>
-							<span>python3.3</span>
-						</span>
-					</div>
+					{% endif %}
 				</li>
 
+			{% endfor %}
 			</ul>
 		</section>
-
-
-		<section>
-			<div class="header color-java">
-				<h3>
-					<i class="devicon-java-plain"></i>
-					<span>java</span>
-				</h3>
-			</div>
-			<ul class="items">
-				<li>
-					<h4>phone number replace</h4>
-					<div>Testing simple regex. Replace phone number like '010-1234-5678' to '01012345678'</div>
-					<div>by youngsoo lee</div>
-				</li>
-				<li>
-					<h4>hello world</h4>
-					<div>print hello world in python</div>
-					<div>by youngsoo lee</div>
-				</li>
-			</ul>
-		</section>
+		{% endfor %}
 	</div>
 </section>
 
@@ -137,19 +121,5 @@
 	</ul>
 
 </section>
-
-
-<!--
-<section style="margin: 100px 50px">
-	<h2>Temp urls</h2>
-	<ul>
-		{% for row in rows %}
-		<li>
-			<a href="/share/{{ row.id }}">{{ row.doc.name }}</a>
-		</li>
-		{% endfor %}
-	</ul>
-</section>-->
-
 
 {% endblock %}

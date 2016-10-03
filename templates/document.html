@@ -14,7 +14,7 @@
 <section id="meta">
 	<div class="first">
 		<h2>
-			{{ doc.name|e }}
+			{{ doc.title|e }}
 			<i class="heart fa fa-heart-o" aria-hidden="true"></i>
 		</h2>
 
@@ -31,12 +31,14 @@
 		</div>
 
 		{% if doc.envs %}
-		<div id="tags">
+		<div class="tags">
 			{% for env in doc.envs : %}
-			<span class="tag">
-				<i class="fa fa-tag" aria-hidden="true"></i>
-				<span>{{ env|e }}</span>
-			</span>
+			<a href="/tag/{{ env|e }}">
+				<span class="tag">
+					<i class="fa fa-tag" aria-hidden="true"></i>
+					<span>{{ env|e }}</span>
+				</span>
+			</a>
 			{% endfor %}
 		</div>
 		{% endif %}

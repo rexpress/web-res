@@ -109,6 +109,7 @@ footer{
 	padding: 20px;
 }
 
+.tags > a{ text-decoration: none; }
 
 .tag{
 	background-color: #777;

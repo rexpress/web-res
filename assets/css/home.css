@@ -111,7 +111,7 @@ section#news{
 section#news .prev-btn,
 section#news .next-btn{
 	position: absolute;
-	top: 150px;
+	top: 250px;
 
 	font-size: 35px;
     color: #ccc;
@@ -163,10 +163,23 @@ section#news .groups section ul.items > li > h4{
 	margin: 0 0 3px;
 	font-size: 18px;
 	font-weight: normal;
-	color: black;
 }
+section#news .groups section ul.items > li > h4 a{ color: black; text-decoration: none; }
+section#news .groups section ul.items > li > h4 a:hover{ color: #666 }
+
 section#news .groups section ul.items li .description{ color: #888; line-height: 1.4em; }
-section#news .groups section ul.items li .author{ color: #555; margin-top: 3px; }
+
+section#news .groups section ul.items li .author{
+	color: #555;
+	margin-top: 3px; 
+}
+section#news .groups section ul.items li .author .profile{
+	border-radius: 50%;
+	width: 13px;
+	height: 13px;
+	vertical-align: middle;
+}
+
 section#news .groups section ul.items li .tags{ margin-top: 5px; }
 section#news .groups section ul.items li .tags .tag{ font-size: 11px; background-color: #999 }
 
