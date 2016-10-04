@@ -1,6 +1,6 @@
 {% extends "/layout/default.html" %}
 
-{% block title %} regular.express {% endblock %}
+{% block title %}regular.express{% endblock %}
 
 {% block head %}
 	{{ super() }}
@@ -43,10 +43,10 @@
 	<div class="groups clearfix">
 		{% for gname, shares in news.items() %}
 		<section>
-			<div class="header color-{{ gname|e }}">
+			<div class="header color-{{ gname }}">
 				<h3>
-					<i class="devicon-{{ gname|e }}-plain"></i>
-					<span>{{ gname|e }}</span>
+					<i class="devicon-{{ gname }}-plain"></i>
+					<span>{{ gname }}</span>
 				</h3>
 			</div>
 			<ul class="items">
@@ -56,19 +56,19 @@
 
 				<li>
 					<h4>
-						<a href="/share/{{ doc._id }}">{{ doc.title | e }}</a>
+						<a href="/share/{{ doc._id }}">{{ doc.title }}</a>
 					</h4>
-					<div class="description">{{ doc.description | e }}</div>
+					<div class="description">{{ doc.description }}</div>
 					<div class="author">
-						<img class="profile" src="https://avatars.githubusercontent.com/u/{{ author.social_id|e }}?size=25">
-						<span class="author-name">{{ author.name|e }}</span>
+						<img class="profile" src="https://avatars.githubusercontent.com/u/{{ author.social_uid }}?size=25">
+						<span class="author-name">{{ author.name }}</span>
 					</div>
 					<div class="tags">
-						{% for env in doc.envs : %}
-						<a href="/tag/{{ env|e }}">
+						{% for tag in doc.tags : %}
+						<a href="/tag/{{ tag }}">
 							<span class="tag">
 								<i class="fa fa-tag" aria-hidden="true"></i>
-								<span>{{ env|e }}</span>
+								<span>{{ tag }}</span>
 							</span>
 						</a>
 						{% endfor %}
@@ -78,8 +78,8 @@
 					<ul class="properties">
 						{% for prop in doc.properties %}
 						<li>
-							<span class="key">{{ prop.name|e }}</span>
-							<span class="value">{{ prop.value|e }}</span>
+							<span class="key">{{ prop.name }}</span>
+							<span class="value">{{ prop.value }}</span>
 						</li>
 						{% endfor %}
 					</ul>

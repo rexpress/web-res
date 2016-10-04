@@ -29,4 +29,22 @@
 		<template>document.html</template>
 	</page>
 	{% endfor %}
+
+
+	<page>
+		<url>/doc</url>
+		<template>under_cons.html</template>
+	</page>
+	<page>
+		<url>/env</url>
+		<template>under_cons.html</template>
+	</page>
+	<page>
+		<url>/down</url>
+		<template>under_cons.html</template>
+	</page>
+	<page>
+		<url>/tag</url>
+		<template>under_cons.html</template>
+	</page>
 </site>

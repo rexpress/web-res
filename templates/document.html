@@ -2,6 +2,7 @@
 {% set doc = rows[0].doc %}
 {% set author = rows[1].doc %}
 
+{% block title %}{{ doc.title }} - regular.express{% endblock %}
 
 {% block head %}
 	{{ super() }}
@@ -14,29 +15,29 @@
 <section id="meta">
 	<div class="first">
 		<h2>
-			{{ doc.title|e }}
+			{{ doc.title }}
 			<i class="heart fa fa-heart-o" aria-hidden="true"></i>
 		</h2>
 
 		<div class="sub">
-			<img class="profile" src="https://avatars.githubusercontent.com/u/{{ author.social_id|e }}?size=44">
-			<span class="author-name">{{ author.name|e }}</span>
-			<span class="datetime">{{ doc.created|e }}</span>
+			<img class="profile" src="https://avatars.githubusercontent.com/u/{{ author.social_uid }}?size=44">
+			<span class="author-name">{{ author.name }}</span>
+			<span class="datetime">{{ doc.created|strftime('%Y%m%d %H%M%S') }}</span>
 		</div>
 	</div>
 
 	<div class="second">
 		<div id="description">
-			{{ doc.description|e|replace('\n', '<br>') }}
+			{{ doc.description|replace('\n', '<br>') }}
 		</div>
 
-		{% if doc.envs %}
+		{% if doc.tags %}
 		<div class="tags">
-			{% for env in doc.envs : %}
-			<a href="/tag/{{ env|e }}">
+			{% for tag in doc.tags : %}
+			<a href="/tag/{{ tag }}">
 				<span class="tag">
 					<i class="fa fa-tag" aria-hidden="true"></i>
-					<span>{{ env|e }}</span>
+					<span>{{ tag }}</span>
 				</span>
 			</a>
 			{% endfor %}
@@ -52,10 +53,10 @@
 		{% for prop in doc.properties %}
 		<li class="clearfix">
 			<div class="fl key">
-				{{ prop.name|e }}
+				{{ prop.name }}
 			</div>
 			<div class="fl value">
-				{{ prop.value|e }}
+				{{ prop.value }}
 			</div>
 		</li>
 		{% endfor %}
@@ -66,12 +67,12 @@
 
 <section id="input">
 	<h3>input</h3>
-	<pre>{{ doc.input|e }}</pre>
+	<pre>{{ doc.input }}</pre>
 </section>
 
 <section id="output">
 	<h3>output</h3>
-	<pre>{{ doc.output|e }}</pre>
+	<pre>{{ doc.output }}</pre>
 </section>
 
 {% endblock %}
