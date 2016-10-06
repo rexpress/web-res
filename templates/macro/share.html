@@ -1,0 +1,38 @@
+{% macro tile(doc, author) -%}
+<div class="share-tile">
+	<h4>
+		<a href="/share/{{ doc._id }}">{{ doc.title }}</a>
+	</h4>
+	<div class="description">{{ doc.description }}</div>
+	<div class="tags">
+		{% for tag in doc.tags : %}
+		<a href="/tag/{{ tag }}">
+			<span class="tag">
+				# {{ tag }}
+			</span>
+		</a>
+		{% endfor %}
+	</div>
+
+	{% if doc.properties %}
+	<ul class="properties">
+		{% for prop in doc.properties %}
+		<li>
+			<span class="key">{{ prop.name }}</span>
+			<span class="value">{{ prop.value }}</span>
+		</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+
+	<div class="last clearfix">
+		<div class="author fl">
+			<img class="profile" src="https://avatars.githubusercontent.com/u/{{ author.social_uid }}?size=25">
+			<span class="author-name">{{ author.name }}</span>
+		</div>
+		<div class="created fr">
+			{{ doc.created|strftime('%Y-%m-%d %H:%M:%S') }}
+		</div>
+	</div>
+</div>
+{% endmacro %}

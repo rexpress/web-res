@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <site>
-	{% set news = model.get('/test/_design/share-view/_view/news?include_docs=true&descending=true') %}
+
+	<!-- render home -->
+	{% set news = model.get('/re/_design/share/_view/news?include_docs=true&descending=true') %}
 	<page>
 		<url>/</url>
 		<context type="json">
@@ -15,13 +17,24 @@
 		<template>home.html</template>
 	</page>
 
-	{% for row in model.get('/test/_design/share-view/_view/share-list?include_docs=true').rows %}
+
+	<!-- render shares -->
+	{% set all_docs = model.post('/re/_find', {
+		'selector': {
+			'_id': { '$gt': 0 },
+			'type': { '$eq': 'share' }
+		},
+		'fields': ['_id', '_rev'],
+		'sort': [{ '_id': 'desc' }]
+	}) %}
+
+	{% for doc in all_docs.docs %}
 	<page>
-		<url>/share/{{ row.id }}/</url>
+		<url>/share/{{ doc._id }}/</url>
 		<context>
 			{{
 				model.get(
-					api = '/test/_design/share-view/_view/share?keys=["' + row.id +'"]&include_docs=true',
+					api = '/re/_design/share/_view/share?keys=["' + doc._id +'"]&include_docs=true',
 					immutable = True
 				)
 			}}
@@ -31,20 +44,21 @@
 	{% endfor %}
 
 
+	<!-- render static pages -->
 	<page>
-		<url>/doc</url>
+		<url>/doc/</url>
 		<template>under_cons.html</template>
 	</page>
 	<page>
-		<url>/env</url>
+		<url>/env/</url>
 		<template>under_cons.html</template>
 	</page>
 	<page>
-		<url>/down</url>
+		<url>/down/</url>
 		<template>under_cons.html</template>
 	</page>
 	<page>
-		<url>/tag</url>
+		<url>/tag/</url>
 		<template>under_cons.html</template>
 	</page>
 </site>

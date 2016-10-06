@@ -18,7 +18,7 @@ section#meta .first{
 section#meta .first h2{
 	margin: 0 0 10px 0;
 	color: #123765;
-	font-weight: bold;
+	font-weight: 600;
 	font-size: 30px;
 	vertical-align: middle;
 }
@@ -47,7 +47,7 @@ section#meta .first .sub .profile{
 	vertical-align: bottom;
 }
 
-section#meta .first .sub .author-name{ color: #555; font-weight: bold; }
+section#meta .first .sub .author-name{ color: #555; font-weight: 600; }
 section#meta .first .sub .datetime{ color: #999; font-size: 13px }
 
 
@@ -66,7 +66,7 @@ section h3{
 	margin: 30px 0 3px 40px;
 	color: #555;
 	font-size: 26px;
-	font-weight: 200;
+	font-weight: 300;
 }
 
 section > pre, section ul{

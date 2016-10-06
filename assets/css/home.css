@@ -7,7 +7,7 @@
 
 section > h2{
 	position: relative;
-	font-weight: 200;
+	font-weight: 300;
 	font-size: 33px;
 	color: #444;
 	margin: 10px 10px 30px;
@@ -45,7 +45,7 @@ section#welcome{
 }
 
 section#welcome h1{
-	font-weight: 100;
+	font-weight: 300;
 	font-size: 37px;
 	color: white;
 	margin: 10px 0;
@@ -63,7 +63,7 @@ section#welcome .buttons a{
 	background-color: rgba(0,0,0,.15);
 	color: white;
 	text-decoration: none;
-	font-weight: 100;
+	font-weight: 300;
 
 	transition: background-color 0.5s;
 }
@@ -121,8 +121,6 @@ section#news .prev-btn{ left: 20px }
 section#news .next-btn{ right: 20px; }
 
 
-section#news ul{ list-style: none; margin: 0; padding: 0 }
-
 section#news .groups section{
 	width: 330px;
 	margin: 0 10px;
@@ -148,54 +146,19 @@ section#news .groups section .header h3{
 
 
 section#news .groups section ul.items {
+	list-style: none; 
 	margin: 0 10px 10px;
 	padding: 0;
 }
 
 section#news .groups section ul.items > li {
-	margin: 10px 0;
+	/*margin: 10px 0;
 	padding: 13px;
 	background-color: white;
-	font-size: 14px;
-}
-
-section#news .groups section ul.items > li > h4{
-	margin: 0 0 3px;
-	font-size: 18px;
-	font-weight: normal;
-}
-section#news .groups section ul.items > li > h4 a{ color: black; text-decoration: none; }
-section#news .groups section ul.items > li > h4 a:hover{ color: #666 }
-
-section#news .groups section ul.items li .description{ color: #888; line-height: 1.4em; }
-
-section#news .groups section ul.items li .author{
-	color: #555;
-	margin-top: 3px; 
-}
-section#news .groups section ul.items li .author .profile{
-	border-radius: 50%;
-	width: 13px;
-	height: 13px;
-	vertical-align: middle;
-}
-
-section#news .groups section ul.items li .tags{ margin-top: 5px; }
-section#news .groups section ul.items li .tags .tag{ font-size: 11px; background-color: #999 }
-
-section#news .groups section ul.items li ul.properties{
-	margin-top: 8px;
-	border-top: 1px solid #ddd;
-	font-size: 13px;
-}
-section#news .groups section ul.items li ul.properties li{
-	margin: 10px 0;
+	font-size: 14px;*/
+	margin: 0;
 	padding: 0;
 }
-section#news .groups section ul.items li ul.properties li span{ background-color: #e3e3e3; padding: 2px 3px }
-section#news .groups section ul.items li ul.properties li .key{ width: 150px; }
-
-
 
 
 
@@ -226,7 +189,7 @@ section#environments ul li{
 	color: #666;
 }
 
-section#environments ul li.with-text{ font-size: 23px; padding-top: 20px; }
+section#environments ul li.with-text{ font-size: 23px; padding-top: 27px; }
 
 footer{
 	background-color: #333;
