@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <site>
-
-	<!-- render home -->
+	{% set tags = model.get('/re/_design/tag/_view/tags?group_level=1') %}
 	{% set news = model.get('/re/_design/share/_view/news?include_docs=true&descending=true') %}
+	
+	<!-- render home -->
 	<page>
 		<url>/</url>
 		<context type="json">
-			{{ json.dumps( dict(
-				news = group(
-					news.rows,
-					('key', 1),
-					('key', 2)
-				)
-			)) }}
+			{
+				"news": {{ json.dumps( group(
+						news.rows,
+						('key', 1),
+						('key', 2)
+					))
+				}},
+				"tags": {{ json.dumps(tags) }}
+			}
 		</context>
 		<template>home.html</template>
 	</page>
+
 
 
 	<!-- render shares -->
@@ -39,7 +43,23 @@
 				)
 			}}
 		</context>
-		<template>document.html</template>
+		<template>share_view.html</template>
+	</page>
+	{% endfor %}
+
+
+
+	<!-- render tags -->
+	{% for tag in tags.rows %}
+	<page>
+		<url>/tag/{{ tag.key }}</url>
+		<context>
+			{{ dict(
+				tag = tag.key,
+				data = model.get('/re/_design/tag/_view/shares?startkey=["' + tag.key +'",""]&endkey=["'+tag.key+'"]&descending=true&include_docs=true').rows
+			) }}
+		</context>
+		<template>tag.html</template>
 	</page>
 	{% endfor %}
 

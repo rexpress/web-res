@@ -116,7 +116,13 @@ footer{
 	background-color: #777;
 	color: white;
 	border-radius: 3px;
-	padding: 3px 7px;
+	padding: 2px 7px;
 	margin-right: 4px;
 	font-size: 12px;
+}
+
+.tag-mini{
+	font-size: 11px;
+	background-color: #999;
+	padding: 1px 5px 2px;
 }

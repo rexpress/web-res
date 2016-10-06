@@ -73,7 +73,7 @@ section#welcome .buttons a:hover{
 
 
 section#search{
-	margin: 30px 0;
+	margin: 60px 0 40px;
 }
 
 section#search #search-bar{
@@ -99,6 +99,16 @@ section#search #search-bar i.fa{
 }
 section#search #search-bar i.fa:hover{ color: #333 }
 
+
+section#search .tags{
+	margin-top: 8px;
+	text-align: center;
+}
+section#search .tags .tag{
+	font-size: 12px;
+	background-color: #eee;
+	color: #333;
+}
 
 
 
@@ -143,22 +153,36 @@ section#news .groups section .header h3{
 	font-weight: normal;
 	font-size: 20px;
 }
-
+section#news .groups section .header h3 a{ text-decoration: none; }
 
 section#news .groups section ul.items {
 	list-style: none; 
-	margin: 0 10px 10px;
+	margin: 0 10px;
 	padding: 0;
 }
 
 section#news .groups section ul.items > li {
-	/*margin: 10px 0;
-	padding: 13px;
-	background-color: white;
-	font-size: 14px;*/
-	margin: 0;
+	margin: 10px 0 0;
 	padding: 0;
 }
+
+section#news .groups section .footer{
+	margin: 3px 10px;
+}
+
+section#news .groups section .footer a.show-more{
+	display: block;
+	width: 100%;
+	padding: 3px 0;
+
+	background-color: #eee;
+	font-size: 13px;
+	
+	text-align: center;
+	color: #666;
+	text-decoration: none;
+}
+
 
 
 
