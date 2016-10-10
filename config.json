@@ -1,7 +1,7 @@
 {
 	"server_info": {
 		"type": "cloudant",
-		"base_url": "https://rexpress.cloudant.com/",
+		"baseurl": "https://rexpress.cloudant.com/",
 		"headers": {
 			"Authorization": "Basic YWJpdHlwaWNoZWRkaXNseWRpdHNwYXRlOjYzYjlkNjFlOTY1YmFiNzRhNDBmZTYwODg1YmFmZjllNDk1OWQyMGE="
 		}

@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <site>
-	{% set news = model.get('/re/_design/share/_view/news?include_docs=true&descending=true') %}
-	{% set tags = model.get('/re/_design/tag/_view/tags?group_level=1') %}
-	{% set env_group = model.get('/re/_design/env/_view/envs?group_level=1') %}
+
+	<!-- model forms -->
+	{{ model.makeform('#view', 	   'GET', '/re/_design/$1/_view/$2?$3') }}
+	{{ model.makeform('#view-eq',  'GET', '/re/_design/$1/_view/$2?keys=["$3"]&include_docs=true') }}
+	{{ model.makeform('#view-eqr', 'GET', '/re/_design/$1/_view/$2?startkey=["$3",{}]&endkey=["$3"]&descending=true&include_docs=true') }}
+	{{ model.makeform('#git-env',  'GET', '/rexpress/environments/raw/master/$1', baseurl='https://github.com/', immutable=True) }}
+
+
+
+	<!-- global vars -->
+	{% set news		  = model.form('#view', 'share', 'news', 'include_docs=true&descending=true') %}
+	{% set tags		  = model.form('#view', 'tag',	 'tags', 'group_level=1') %}
+	{% set env_groups = model.form('#view', 'env',	 'envs', 'group_level=1') %}
+
+	<!-- set env infos -->
+	{% set env_group_info = dict() %}
+
+	{% for eg in env_groups.rows %}
+		{% set env = eg.key[0] %}
+
+		{% set _tmp = env_group_info.update({ env : {
+			'env'    : env,
+			'info'   : model.form('#git-env', env + '/_info.json'),
+			'shares' : model.form('#view-eqr', 'env', 'shares', env).rows,
+		} }) %}
+
+	{% endfor %}
+
 
 	<!-- render home -->
 	<page>
@@ -10,13 +35,10 @@
 		<context type="json">
 			{
 				"news": [
-					{% for eg in env_group.rows %}
-						{% set env = eg.key[0] %}
+					{% for env, data in env_group_info.items() %}
 						{
 							"env": "{{ env }}",
-							"data": {{ json.dumps(
-								model.get('/re/_design/env/_view/shares?startkey=["'+env+'",{}]&endkey=["'+env+'"]&descending=true&include_docs=true').rows
-							) }}
+							"data": {{ json.dumps(data.shares) }}
 						}
 						{% if not loop.last %},{% endif %}
 					{% endfor %}
@@ -29,42 +51,13 @@
 
 
 
-	<!-- render shares -->
-	{% set all_docs = model.post('/re/_find', {
-		'selector': {
-			'_id': { '$gt': 0 },
-			'type': { '$eq': 'share' }
-		},
-		'fields': ['_id', '_rev'],
-		'sort': [{ '_id': 'desc' }]
-	}) %}
-
-	{% for doc in all_docs.docs %}
-	<page>
-		<url>/share/{{ doc._id }}/</url>
-		<context>
-			{{
-				model.get(
-					api = '/re/_design/share/_view/share?keys=["' + doc._id +'"]&include_docs=true',
-					immutable = True
-				)
-			}}
-		</context>
-		<template>share_view.html</template>
-	</page>
-	{% endfor %}
-
-
 	<!-- render env_group(level=1) -->
-	{% for eg in env_group.rows %}
+	{% for eg in env_groups.rows %}
 	{% set env = eg.key[0] %}
 	<page>
 		<url>/env/{{ env }}</url>
 		<context>
-			{{ dict(
-				env 	= env,
-				shares	= model.get('/re/_design/env/_view/shares?startkey=["'+env+'",{}]&endkey=["'+env+'"]&descending=true&include_docs=true').rows,
-			) }}
+			{{ env_group_info[ env ] }}
 		</context>
 		<template>env_group.html</template>
 	</page>
@@ -78,10 +71,37 @@
 		<context>
 			{{ dict(
 				tag 	= tag.key,
-				shares 	= model.get('/re/_design/tag/_view/shares?startkey=["'+tag.key+'",""]&endkey=["'+tag.key+'"]&descending=true&include_docs=true').rows,
+				shares 	= model.form('#view-eqr', 'tag', 'shares', tag.key).rows,
 			) }}
 		</context>
 		<template>tag.html</template>
+	</page>
+	{% endfor %}
+
+
+	<!-- get all share docs -->
+	{% set all_shares = model.post('/re/_find', {
+		'selector': {
+			'_id': { '$gt': 0 },
+			'type': { '$eq': 'share' }
+		},
+		'fields': ['_id', '_rev'],
+		'sort': [{ '_id': 'desc' }]
+	}) %}
+
+	<!-- render shares -->
+	{% for doc in all_shares.docs %}
+	<page>
+		<url>/share/{{ doc._id }}/</url>
+		<context>
+			{{
+				model.get(
+					api = '/re/_design/share/_view/share?keys=["' + doc._id +'"]&include_docs=true',
+					immutable = True
+				)
+			}}
+		</context>
+		<template>share_view.html</template>
 	</page>
 	{% endfor %}
 
