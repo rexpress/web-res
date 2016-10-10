@@ -44,12 +44,13 @@
 	</h1>
 
 	<ul id="lists" class="clearfix">
-	{% for doc in data %}
+	{% for doc in shares %}
 		{% if doc.doc.type == "share" %}
 			<li>
 				{{ share_macro.tile(
 					doc = doc.doc,
-					author = data[ loop.index ].doc
+					author = shares[ loop.index ].doc,
+					datetime = datetime
 				) }}
 			</li>
 		{% endif %}

@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <site>
-	{% set tags = model.get('/re/_design/tag/_view/tags?group_level=1') %}
 	{% set news = model.get('/re/_design/share/_view/news?include_docs=true&descending=true') %}
-	
+	{% set tags = model.get('/re/_design/tag/_view/tags?group_level=1') %}
+	{% set env_group = model.get('/re/_design/env/_view/envs?group_level=1') %}
+
 	<!-- render home -->
 	<page>
 		<url>/</url>
 		<context type="json">
 			{
-				"news": {{ json.dumps( group(
-						news.rows,
-						('key', 1),
-						('key', 2)
-					))
-				}},
+				"news": [
+					{% for eg in env_group.rows %}
+						{% set env = eg.key[0] %}
+						{
+							"env": "{{ env }}",
+							"data": {{ json.dumps(
+								model.get('/re/_design/env/_view/shares?startkey=["'+env+'",{}]&endkey=["'+env+'"]&descending=true&include_docs=true').rows
+							) }}
+						}
+						{% if not loop.last %},{% endif %}
+					{% endfor %}
+				],
 				"tags": {{ json.dumps(tags) }}
 			}
 		</context>
@@ -48,6 +55,21 @@
 	{% endfor %}
 
 
+	<!-- render env_group(level=1) -->
+	{% for eg in env_group.rows %}
+	{% set env = eg.key[0] %}
+	<page>
+		<url>/env/{{ env }}</url>
+		<context>
+			{{ dict(
+				env 	= env,
+				shares	= model.get('/re/_design/env/_view/shares?startkey=["'+env+'",{}]&endkey=["'+env+'"]&descending=true&include_docs=true').rows,
+			) }}
+		</context>
+		<template>env_group.html</template>
+	</page>
+	{% endfor %}
+
 
 	<!-- render tags -->
 	{% for tag in tags.rows %}
@@ -55,8 +77,8 @@
 		<url>/tag/{{ tag.key }}</url>
 		<context>
 			{{ dict(
-				tag = tag.key,
-				data = model.get('/re/_design/tag/_view/shares?startkey=["' + tag.key +'",""]&endkey=["'+tag.key+'"]&descending=true&include_docs=true').rows
+				tag 	= tag.key,
+				shares 	= model.get('/re/_design/tag/_view/shares?startkey=["'+tag.key+'",""]&endkey=["'+tag.key+'"]&descending=true&include_docs=true').rows,
 			) }}
 		</context>
 		<template>tag.html</template>

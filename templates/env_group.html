@@ -1,0 +1,72 @@
+{% extends "/layout/default.html" %}
+{% import 'macro/share.html' as share_macro %}
+
+{% block title %}
+	{{env}} - regular.express
+{% endblock %}
+
+{% block head %}
+	{{ super() }}
+
+	<style type="text/css">
+		html,body{ background-color: #eee }
+		#content h1{
+			margin: 40px 0 10px;
+			font-weight: 300;
+			font-size: 40px;
+			text-align: center;
+		}
+
+		#content section{
+			margin: 10px 0;
+		}
+
+		#content section.ac{ text-align: center; }
+
+		.tags{
+			margin: 20px 0;
+		}
+
+		ul#lists{
+			padding: 10px 40px;
+			list-style: none;
+		}
+
+		ul#lists > li{
+			float: left;
+			width: 300px;
+			
+			margin-right: 20px;
+			border: 1px solid #ddd;
+			border-radius: 3px;
+		}
+	</style>
+{% endblock %}
+
+
+{% block content %}
+	<h1>
+		<i class="devicon-{{env}}-plain"></i>
+		<div>{{env}}</div>
+	</h1>
+
+	<section class="ac">
+		(environment description)
+	</section>
+
+	<section>
+		<ul id="lists" class="clearfix">
+		{% for doc in shares %}
+			{% if doc.doc.type == "share" %}
+				<li>
+					{{ share_macro.tile(
+						doc = doc.doc,
+						author = shares[ loop.index ].doc,
+						datetime = datetime
+					) }}
+				</li>
+			{% endif %}
+		{% endfor %}
+		</ul>
+	</section>
+{% endblock %}

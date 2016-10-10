@@ -1,4 +1,4 @@
-{% macro tile(doc, author) -%}
+{% macro tile(doc, author, datetime) -%}
 <div class="share-tile">
 	<h4>
 		<a href="/share/{{ doc._id }}">{{ doc.title }}</a>
@@ -31,7 +31,7 @@
 			<span class="author-name">{{ author.name }}</span>
 		</div>
 		<div class="created fr">
-			{{ doc.created|strftime('%Y-%m-%d %H:%M:%S') }}
+			{{ datetime.fromtimestamp(doc.created / 1000).strftime('%Y-%m-%d %H:%M:%S') }}
 		</div>
 	</div>
 </div>

@@ -9,8 +9,6 @@
 
 {% block head %}
 	{{ super() }}
-
-	<link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/home.css">
 {% endblock %}
 
@@ -56,24 +54,27 @@
 	<i class="fa fa-chevron-right next-btn"></i>
 
 	<div class="groups clearfix">
-		{% for class, shares in news.items() %}
+		{% for group in news %}
 		<section>
 			<div class="header">
 				<h3>
-					<a href="/env/{{ class }}" class="color-{{ class }}">
-						<i class="devicon-{{ class }}-plain"></i>
-						<span>{{ class }}</span>
+					<a href="/env/{{ group.env }}" class="color-{{ group.env }}">
+						<i class="devicon-{{ group.env }}-plain"></i>
+						<span>{{ group.env }}</span>
 					</a>
 				</h3>
 			</div>
 			<ul class="items">
-			{% for id, val in shares.items() %}
+			{% for dat in group.data %}
+				{% if dat.doc.type == "share" %}
 				<li>
 					{{ share_macro.tile(
-						doc = val[0].doc,
-						author = val[1].doc
+						doc = dat.doc,
+						author = group.data[loop.index].doc,
+						datetime = datetime
 					) }}
 				</li>
+				{% endif %}
 			{% endfor %}
 			</ul>
 			
