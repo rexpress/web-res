@@ -5,27 +5,6 @@
 .color-java{ color: #eb8000 }
 
 
-section > h2{
-	position: relative;
-	font-weight: 300;
-	font-size: 33px;
-	color: #444;
-	margin: 10px 10px 30px;
-
-	text-align: center;
-}
-section > h2:after{
-	content: '';
-	position: absolute;
-	bottom: -8px;
-	left: 50%;
-	height: 2px;
-	width: 30px;
-	margin-left: -15px;
-	display: block;
-	background-color: #46AEDA;
-}
-
 section > .description{
 	text-align: center;
 	font-size: 16px;

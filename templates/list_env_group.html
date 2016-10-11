@@ -1,0 +1,45 @@
+{% extends "/layout/list.html" %}
+
+{% block title %}
+	{{env}} - regular.express
+{% endblock %}
+
+{% block head %}
+	{{ super() }}
+	<style type="text/css">
+		
+		#content > section.header {
+
+		}
+
+	</style>
+{% endblock %}
+
+{% block content %}
+	<section class="header">
+		<h1>
+			<i class="devicon-{{env}}-plain"></i>
+			<div>{{env}}</div>
+		</h1>
+
+		<div class="env-description">
+			<p>{{info.description}}</p>
+			<p>
+				<a href="{{info.website}}">{{info.website}}</a>
+			</p>
+		</div>
+
+		<div class="children clearfix">
+			{% for child in children %}
+				{% set child_env = child.key[1] %}
+				<a href="/env/{{ env }}/{{ child_env }}">
+					<span>{{ child_env }}</span>
+				</a>
+			{% endfor %}
+		</div>
+	</section>
+
+	<h2 class="ctr">Sharings</h2>
+	{{ super() }}
+
+{% endblock %}

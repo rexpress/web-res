@@ -56,10 +56,16 @@ section#meta .second{
 }
 
 section#meta .second #description{
-	margin: 5px 0;
+	margin: 10px 0;
 	font-size: 16px;
-	line-height: 1.3em;
+	line-height: 1.5em;
 }
+
+
+section#meta .second .tags .env-group{ color: #e3e3e3 }
+section#meta .second .tags .env-child{ color: white; font-weight: bold; }
+
+
 
 
 section h3{

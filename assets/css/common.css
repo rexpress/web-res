@@ -110,7 +110,8 @@ footer{
 	padding: 40px;
 }
 
-.tags > a{ text-decoration: none; }
+
+.tags a{ text-decoration: none; }
 
 .tag{
 	background-color: #777;
@@ -119,10 +120,49 @@ footer{
 	padding: 2px 7px;
 	margin-right: 4px;
 	font-size: 12px;
+
+	transition: background-color 0.5s;
 }
+.tag:hover{ background-color: #999 }
+
 
 .tag-mini{
 	font-size: 11px;
 	background-color: #999;
 	padding: 1px 5px 2px;
+}
+.tag-mini:hover{ background-color: #bbb }
+
+
+.tag-special{
+	color: white;
+	background-color: #11b9b9;
+}
+.tag-special:hover{ background-color: #08d2d2 }
+
+.tag-mini.tag-special{ padding-left: 6px; }
+
+
+
+
+h2.ctr{
+	position: relative;
+	font-weight: 300;
+	font-size: 33px;
+	color: #444;
+	margin: 10px 10px 30px;
+
+	text-align: center;
+}
+
+h2.ctr:after{
+	content: '';
+	position: absolute;
+	bottom: -8px;
+	left: 50%;
+	height: 2px;
+	width: 30px;
+	margin-left: -15px;
+	display: block;
+	background-color: #46AEDA;
 }

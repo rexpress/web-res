@@ -1,0 +1,26 @@
+{% extends '/layout/default.html' %}
+{% import '/macro/share.html' as share_macro %}
+
+{% block head %}
+	{{ super() }}
+	<link rel="stylesheet" type="text/css" href="/css/list.css">
+{% endblock %}
+
+
+{% block content %}
+	<section>
+		<ul id="lists" class="clearfix">
+		{% for share in shares %}
+			{% if share.doc.type == "share" %}
+				<li>
+					{{ share_macro.tile(
+						doc = share.doc,
+						author = shares[ loop.index ].doc,
+						datetime = datetime
+					) }}
+				</li>
+			{% endif %}
+		{% endfor %}
+		</ul>
+	</section>
+{% endblock %}

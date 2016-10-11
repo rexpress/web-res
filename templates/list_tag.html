@@ -1,0 +1,21 @@
+{% extends "/layout/list.html" %}
+
+
+{% block title %}
+	#{{tag}} - regular.express
+{% endblock %}
+
+
+
+{% block content %}
+	<section class="header">
+		<h1>
+			<span class="gloomy">#</span>
+			<span>{{tag}}</span>
+		</h1>
+	</section>
+
+	<h2 class="ctr">Sharings</h2>
+	{{ super() }}
+
+{% endblock %}

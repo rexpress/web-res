@@ -1,46 +1,60 @@
 @charset "utf-8";
 
 .share-tile {
-	padding: 13px;
+	padding: 13px 13px 8px;
 	background-color: white;
 	font-size: 14px;
 }
 
-.share-tile > h4{
+.share-tile a{ text-decoration: none; }
+
+.share-tile h4{
 	margin: 0 0 3px;
 	font-size: 18px;
 	font-weight: normal;
+	color: black;
+	transition: color 0.5s;
 }
-.share-tile > h4 a{ color: black; text-decoration: none; }
-.share-tile > h4 a:hover{ color: #666 }
+.share-tile .description{
+	color: #555;
+	line-height: 1.5em;
+	font-size: 15px;
+	transition: color 0.5s;
+}
 
+.share-tile a:hover h4{ color: #777 }
+.share-tile a:hover .description{ color: #999 }
 
-.share-tile .description{ color: #555; line-height: 1.5em; font-size: 15px; }
-
-.share-tile .tags{ margin-top: 5px; }
+.share-tile .tags{ margin-top: 7px; }
 
 
 .share-tile ul.properties{
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	margin-top: 8px;
-	border-top: 1px solid #ddd;
+	margin-top: 16px;
 	font-size: 13px;
 }
 .share-tile ul.properties li{
 	margin: 10px 0;
 	padding: 0;
 }
-.share-tile ul.properties li span{ background-color: #e3e3e3; padding: 2px 3px }
-.share-tile ul.properties li .key{ width: 150px; }
+.share-tile ul.properties li span{
+	border-bottom: 1px solid #ccc;
+	padding: 2px 3px;
+}
+.share-tile ul.properties li span.key{
+	display: inline-block;
+	*zoom: 1;
+	width: 60px;
+	color: #444;
+}
 
 
 
 
 .share-tile .last{
-	border-top: 1px solid #ddd;
-	padding-top: 1px;
+	padding-top: 3px;
 }
 
 .share-tile .last .author{

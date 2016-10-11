@@ -31,12 +31,19 @@
 	</div>
 
 	<div class="second">
-		<div id="description">
-			{{ doc.description|replace('\n', '<br>') }}
-		</div>
+		<pre id="description">{{ doc.description }}</pre>
 
 		{% if doc.tags %}
 		<div class="tags">
+			<span class="tag tag-special">
+				<a href="/env/{{ doc.env[0] }}">
+					<span class="env-group">{{ doc.env[0] }}/</span>
+				</a>
+				<a href="/env/{{ doc.env[0] }}/{{ doc.env[1] }}">
+					<span class="env-child">{{ doc.env[1] }}</span>
+				</a>
+			</span>
+
 			{% for tag in doc.tags : %}
 			<a href="/tag/{{ tag }}">
 				<span class="tag">

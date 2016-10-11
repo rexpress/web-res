@@ -2,10 +2,10 @@
 <site>
 
 	<!-- model forms -->
-	{{ model.makeform('#view', 	   'GET', '/re/_design/$1/_view/$2?$3') }}
-	{{ model.makeform('#view-eq',  'GET', '/re/_design/$1/_view/$2?keys=["$3"]&include_docs=true') }}
-	{{ model.makeform('#view-eqr', 'GET', '/re/_design/$1/_view/$2?startkey=["$3",{}]&endkey=["$3"]&descending=true&include_docs=true') }}
-	{{ model.makeform('#git-env',  'GET', '/rexpress/environments/raw/master/$1', baseurl='https://github.com/', immutable=True) }}
+	{{ model.makeform('#view',       'GET', '/re/_design/$1/_view/$2?$3') }}
+	{{ model.makeform('#view-eq', 	 'GET', '/re/_design/$1/_view/$2?keys=["$3"]&include_docs=true') }}
+	{{ model.makeform('#view-range', 'GET', '/re/_design/$1/_view/$2?startkey=["$3",{}]&endkey=["$3"]&descending=true&include_docs=true') }}
+	{{ model.makeform('#git-env',    'GET', '/rexpress/environments/raw/master/$1', baseurl='https://github.com/', immutable=True) }}
 
 
 
@@ -14,6 +14,8 @@
 	{% set tags		  = model.form('#view', 'tag',	 'tags', 'group_level=1') %}
 	{% set env_groups = model.form('#view', 'env',	 'envs', 'group_level=1') %}
 
+	{# set env_groups = sorted(env_groups, key=lambda doc: doc.value.max) #}
+
 	<!-- set env infos -->
 	{% set env_group_info = dict() %}
 
@@ -21,9 +23,10 @@
 		{% set env = eg.key[0] %}
 
 		{% set _tmp = env_group_info.update({ env : {
-			'env'    : env,
-			'info'   : model.form('#git-env', env + '/_info.json'),
-			'shares' : model.form('#view-eqr', 'env', 'shares', env).rows,
+			'env'     : env,
+			'info'    : model.form('#git-env', env + '/_info.json'),
+			'shares'  : model.form('#view-range', 'env', 'shares', env).rows,
+			'children': model.form('#view', 'env', 'envs', 'group_level=2&startkey=["'+env+'"]&endkey=["'+env+'",{}]').rows,
 		} }) %}
 
 	{% endfor %}
@@ -59,7 +62,7 @@
 		<context>
 			{{ env_group_info[ env ] }}
 		</context>
-		<template>env_group.html</template>
+		<template>list_env_group.html</template>
 	</page>
 	{% endfor %}
 
@@ -71,10 +74,10 @@
 		<context>
 			{{ dict(
 				tag 	= tag.key,
-				shares 	= model.form('#view-eqr', 'tag', 'shares', tag.key).rows,
+				shares 	= model.form('#view-range', 'tag', 'shares', tag.key).rows,
 			) }}
 		</context>
-		<template>tag.html</template>
+		<template>list_tag.html</template>
 	</page>
 	{% endfor %}
 
