@@ -2,17 +2,17 @@
 <site>
 
 	<!-- model forms -->
-	{{ model.makeform('#view',       'GET', '/re/_design/$1/_view/$2?$3') }}
-	{{ model.makeform('#view-eq', 	 'GET', '/re/_design/$1/_view/$2?keys=["$3"]&include_docs=true') }}
-	{{ model.makeform('#view-range', 'GET', '/re/_design/$1/_view/$2?startkey=["$3",{}]&endkey=["$3"]&descending=true&include_docs=true') }}
-	{{ model.makeform('#git-env',    'GET', '/rexpress/environments/raw/master/$1', baseurl='https://github.com/', immutable=True) }}
+	{{ model.make_macro('#view',       'GET', '/re/_design/$1/_view/$2?$3') }}
+	{{ model.make_macro('#view-eq', 	 'GET', '/re/_design/$1/_view/$2?keys=["$3"]&include_docs=true') }}
+	{{ model.make_macro('#view-range', 'GET', '/re/_design/$1/_view/$2?startkey=["$3",{}]&endkey=["$3"]&descending=true&include_docs=true') }}
+	{{ model.make_macro('#git-env',    'GET', '/rexpress/environments/raw/master/$1', baseurl='https://github.com/', immutable=True) }}
 
 
 
 	<!-- global vars -->
-	{% set news		  = model.form('#view', 'share', 'news', 'include_docs=true&descending=true') %}
-	{% set tags		  = model.form('#view', 'tag',	 'tags', 'group_level=1') %}
-	{% set env_groups = model.form('#view', 'env',	 'envs', 'group_level=1') %}
+	{% set news		  = model.macro('#view', 'share', 'news', 'include_docs=true&descending=true') %}
+	{% set tags		  = model.macro('#view', 'tag',	 'tags', 'group_level=1') %}
+	{% set env_groups = model.macro('#view', 'env',	 'envs', 'group_level=1') %}
 
 	{# set env_groups = sorted(env_groups, key=lambda doc: doc.value.max) #}
 
@@ -24,9 +24,9 @@
 
 		{% set _tmp = env_group_info.update({ env : {
 			'env'     : env,
-			'info'    : model.form('#git-env', env + '/_info.json'),
-			'shares'  : model.form('#view-range', 'env', 'shares', env).rows,
-			'children': model.form('#view', 'env', 'envs', 'group_level=2&startkey=["'+env+'"]&endkey=["'+env+'",{}]').rows,
+			'info'    : model.macro('#git-env', env + '/_info.json'),
+			'shares'  : model.macro('#view-range', 'env', 'shares', env).rows,
+			'children': model.macro('#view', 'env', 'envs', 'group_level=2&startkey=["'+env+'"]&endkey=["'+env+'",{}]').rows,
 		} }) %}
 
 	{% endfor %}
@@ -74,7 +74,7 @@
 		<context>
 			{{ dict(
 				tag 	= tag.key,
-				shares 	= model.form('#view-range', 'tag', 'shares', tag.key).rows,
+				shares 	= model.macro('#view-range', 'tag', 'shares', tag.key).rows,
 			) }}
 		</context>
 		<template>list_tag.html</template>
