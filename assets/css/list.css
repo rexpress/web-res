@@ -28,14 +28,35 @@ html,body{ background-color: #eee }
 
 #content .header .env-description{
 	text-align: center;
-	font-size: 13px;
+	font-size: 16px;
 }
 
-#content .header .env-description p{
-	margin: 6px 0;
+.env-description p{
+	margin: 5px 0;
 }
-#content .header .env-description a{ color: #bbb; text-decoration: none; }
-#content .header .env-description a:hover{ text-decoration: underline; }
+.env-description a{ color: #bbb; text-decoration: none; }
+.env-description a:hover{ text-decoration: underline; }
+
+
+
+.env-description p.author{
+	font-size: 14px;
+	color: #bbb;
+}
+
+.env-description p.docker{
+	margin-top: 15px;
+	font-size: 14px;
+}
+
+.env-description p.docker > span{ vertical-align: middle; }
+.env-description p.docker i{
+	font-size: 32px;
+	vertical-align: middle;
+}
+.env-description p.docker a{ color: #9fe7ff }
+
+
 
 
 #content .header .children{
@@ -60,6 +81,7 @@ html,body{ background-color: #eee }
 
 
 
+
 ul#lists{
 	padding: 10px 40px;
 	list-style: none;
@@ -76,4 +98,13 @@ ul#lists > li{
 
 ul#lists > li .tags{
 	margin: 20px 0;
+}
+
+
+.no-sharings{
+	text-align: center;
+	padding: 30px 0;
+	color: #333;
+	font-size: 25px;
+	font-weight: 300;
 }

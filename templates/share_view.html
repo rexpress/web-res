@@ -16,10 +16,7 @@
 {% block content %}
 <section id="meta">
 	<div class="first">
-		<h2>
-			{{ doc.title }}
-			<i class="heart fa fa-heart-o" aria-hidden="true"></i>
-		</h2>
+		<h2>{{ doc.title }}</h2>
 
 		<div class="sub">
 			<img class="profile" src="https://avatars.githubusercontent.com/u/{{ author.social_uid }}?size=44">
@@ -33,11 +30,10 @@
 	<div class="second">
 		<pre id="description">{{ doc.description }}</pre>
 
-		{% if doc.tags %}
 		<div class="tags">
 			<span class="tag tag-special">
 				<a href="/env/{{ doc.env[0] }}">
-					<span class="env-group">{{ doc.env[0] }}/</span>
+					<span class="env-group">{{ doc.env[0] }}&gt;</span>
 				</a>
 				<a href="/env/{{ doc.env[0] }}/{{ doc.env[1] }}">
 					<span class="env-child">{{ doc.env[1] }}</span>
@@ -54,14 +50,14 @@
 			</a>
 			{% endfor %}
 		</div>
-		{% endif %}
 	</div>
 </section>
 
 {% if doc.properties %}
 <section id="properties">
 	<h3>properties</h3>
-	<ul>
+
+	<ul class="content">
 		{% for prop in doc.properties %}
 		<li class="clearfix">
 			<div class="fl key">
@@ -79,12 +75,67 @@
 
 <section id="input">
 	<h3>input</h3>
-	<pre>{{ doc.input }}</pre>
+
+	<table class="lines">
+		{% set lines = doc.input.split('\n') %}
+		<tbody>
+			<tr>
+				<td class="line-number">
+					{% for line in lines %}
+					<div class="{{ ['e','o'][loop.index % 2] }}">{{ loop.index }}</div>
+					{% endfor %}
+				</td>
+				<td class="data">
+					{% for line in lines %}
+					<div class="{{ ['e','o'][loop.index % 2] }}">{{ line|e|default('&nbsp;', True)|safe }}</div>
+					{% endfor %}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!--<pre class="content">{{ doc.input }}</pre>-->
 </section>
 
 <section id="output">
 	<h3>output</h3>
-	<pre>{{ doc.output }}</pre>
+	<table class="lines">
+		<tbody>
+		{% set type = doc.output.resultType %}
+
+		{% if type == 'STRING' %}
+			<tr>
+				<td class="line-number">
+					{% for line in doc.output.testResult %}
+					<div class="{{ ['e','o'][loop.index % 2] }}">{{ loop.index }}</div>
+					{% endfor %}
+				</td>
+				<td class="data">
+					{% for line in doc.output.testResult %}
+					<div class="{{ ['e','o'][loop.index % 2] }}">{{ line|e|default('&nbsp;', True)|safe }}</div>
+					{% endfor %}
+				</td>
+			</tr>
+
+		{% elif type == 'GROUP' %}
+				{{ doc.output.testResult }}
+
+		{% elif type == 'MATCH' %}
+			<tr>
+				<td class="line-number">
+					{% for line in doc.output.testResult %}
+					<div class="{{ ['e','o'][loop.index % 2] }}">{{ loop.index }}</div>
+					{% endfor %}
+				</td>
+				<td class="data">
+					{% for val in doc.output.testResult %}
+					<div class="{{ ['e','o'][loop.index % 2] }}">{{ 'Matched' if val else 'UnMatched' }}</div>
+					{% endfor %}
+				</td>
+			</tr>
+		{% endif %}
+		</tbody>
+	</table>
 </section>
 
 {% endblock %}

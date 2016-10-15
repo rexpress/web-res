@@ -1,36 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <site>
-
-	<!-- model forms -->
-	{{ model.make_macro('#view',       'GET', '/re/_design/$1/_view/$2?$3') }}
-	{{ model.make_macro('#view-eq', 	 'GET', '/re/_design/$1/_view/$2?keys=["$3"]&include_docs=true') }}
-	{{ model.make_macro('#view-range', 'GET', '/re/_design/$1/_view/$2?startkey=["$3",{}]&endkey=["$3"]&descending=true&include_docs=true') }}
-	{{ model.make_macro('#git-env',    'GET', '/rexpress/environments/raw/master/$1', baseurl='https://github.com/', immutable=True) }}
-
+	{{ ext.customize_model(model) }}
 
 
 	<!-- global vars -->
-	{% set news		  = model.macro('#view', 'share', 'news', 'include_docs=true&descending=true') %}
-	{% set tags		  = model.macro('#view', 'tag',	 'tags', 'group_level=1') %}
-	{% set env_groups = model.macro('#view', 'env',	 'envs', 'group_level=1') %}
+	{% set tags = model.macro('#view', 'tag', 'tags', 'group_level=1') %}
+	{% set envs = ext.get_envs(model) %}
 
 	{# set env_groups = sorted(env_groups, key=lambda doc: doc.value.max) #}
-
-	<!-- set env infos -->
-	{% set env_group_info = dict() %}
-
-	{% for eg in env_groups.rows %}
-		{% set env = eg.key[0] %}
-
-		{% set _tmp = env_group_info.update({ env : {
-			'env'     : env,
-			'info'    : model.macro('#git-env', env + '/_info.json'),
-			'shares'  : model.macro('#view-range', 'env', 'shares', env).rows,
-			'children': model.macro('#view', 'env', 'envs', 'group_level=2&startkey=["'+env+'"]&endkey=["'+env+'",{}]').rows,
-		} }) %}
-
-	{% endfor %}
-
 
 	<!-- render home -->
 	<page>
@@ -38,7 +15,7 @@
 		<context type="json">
 			{
 				"news": [
-					{% for env, data in env_group_info.items() %}
+					{% for env, data in envs.items() %}
 						{
 							"env": "{{ env }}",
 							"data": {{ json.dumps(data.shares) }}
@@ -55,22 +32,29 @@
 
 
 	<!-- render env_group(level=1) -->
-	{% for eg in env_groups.rows %}
-	{% set env = eg.key[0] %}
+	{% for env_group, data in envs.items() %}
 	<page>
-		<url>/env/{{ env }}</url>
-		<context>
-			{{ env_group_info[ env ] }}
-		</context>
+		<url>/env/{{ env_group }}/</url>
+		<context>{{ data }}</context>
 		<template>list_env_group.html</template>
 	</page>
+
+		<!-- env_child(level=2) -->
+		{% for env_child, data2 in data.children.items() %}
+			<page>
+				<url>/env/{{ env_group }}/{{ env_child }}/</url>
+				<context>{{ data2 }}</context>
+				<template>list_env_child.html</template>
+			</page>
+		{% endfor %}
 	{% endfor %}
+
 
 
 	<!-- render tags -->
 	{% for tag in tags.rows %}
 	<page>
-		<url>/tag/{{ tag.key }}</url>
+		<url>/tag/{{ tag.key }}/</url>
 		<context>
 			{{ dict(
 				tag 	= tag.key,

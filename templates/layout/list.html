@@ -8,18 +8,25 @@
 
 
 {% block content %}
+	<h2 class="ctr">Sharings</h2>
 	<section>
-		<ul id="lists" class="clearfix">
-		{% for share in shares %}
-			{% if share.doc.type == "share" %}
-				<li>
-					{{ share_macro.tile(
-						doc = share.doc,
-						author = shares[ loop.index ].doc,
-					) }}
-				</li>
-			{% endif %}
-		{% endfor %}
-		</ul>
+		{% if shares %}
+			<ul id="lists" class="clearfix">
+			{% for share in shares %}
+				{% if share.doc.type == "share" %}
+					<li>
+						{{ share_macro.tile(
+							doc = share.doc,
+							author = shares[ loop.index ].doc,
+						) }}
+					</li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		{% else %}
+			<div class="no-sharings">
+				- No sharings yet -
+			</div>
+		{% endif %}
 	</section>
 {% endblock %}

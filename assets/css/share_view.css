@@ -23,7 +23,7 @@ section#meta .first h2{
 	vertical-align: middle;
 }
 
-section#meta .first h2 .heart{
+/*section#meta .first h2 .heart{
 	color: #666;
 	font-size: 20px;
 	vertical-align: middle;
@@ -33,7 +33,7 @@ section#meta .first h2 .heart{
 
 section#meta .first h2 .heart:hover{
 	color: #e91e63;
-}
+}*/
 
 
 section#meta .first .sub{
@@ -75,7 +75,7 @@ section h3{
 	font-weight: 300;
 }
 
-section > pre, section ul{
+section .content {
 	background-color: white;
 	padding: 20px 40px;
 	margin: 0;
@@ -94,7 +94,7 @@ section#properties ul li .key{
 }
 
 section#properties ul li .value{
-	background-color: #e3e3e3;
+	background-color: #c6eaea;
 	padding: 2px 5px;
 }
 
@@ -102,5 +102,43 @@ section > pre {
 	line-height: 1.3em;
 }
 
+
+
+
+table.lines{
+	width: 100%;
+	border: none;
+	outline: none;
+	font-size: 15px;
+
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	background-color: white;
+}
+
+table.lines tr td{
+	margin: 0;
+	padding: 0;
+}
+
+table.lines tr td.line-number{
+	width: 50px;
+	text-align: right;
+	border-right: 2px solid #11b9b9;
+	color: #777;
+}
+
+table.lines tr td > div{
+	padding: 4px 7px;
+}
+
+table.lines tr td.line-number > div.o,
+table.lines tr td.data > div.e{
+	background-color: #f6fafd;
+}
+
+table.lines tr td.line-number > div.e{
+	background-color: #efefef;
+}
 
 

@@ -1,0 +1,122 @@
+{% extends "/layout/list.html" %}
+
+{% block title %}
+	{{env_child}} - regular.express
+{% endblock %}
+
+{% block head %}
+	{{ super() }}
+	<style type="text/css">
+		
+		#content > section.header h1 > i{ vertical-align: middle; }
+		#content > section.header h1 > span{ vertical-align: top; }
+
+		#content > section.header h1 a{
+			color: white;
+			text-decoration: none;
+		}
+
+		#content > section.header h1 .sub{
+			font-size: 32px;
+			color: #aaa;
+		}
+		#content > section.header h1 .sub a{ color: #aaa }
+
+
+		#content .header .properties{
+			margin-top: 25px;
+			padding-top: 10px;
+			border-top: 1px solid #446380;
+		}
+
+		#content .header .properties h3{
+			margin: 0 0 14px 0;
+			padding: 0;
+			font-size: 25px;
+			font-weight: 300;
+			color: #eee;
+			text-align: center;
+		}
+
+		#content .header .properties ul{
+			list-style: none;
+			margin: 5px 0;
+			padding: 0;
+			color: #ddd;
+			font-weight: 300;
+			font-size: 15px;
+		}
+
+		#content .header .properties ul li{ margin: 5px 0; }
+		#content .header .properties ul li > div{ width: 50%; }
+		#content .header .properties ul li > div.key{
+			text-align: right;
+			margin-left: -8px;
+		}
+		#content .header .properties ul li > div span{
+			display: inline-block;
+			*zoom: 1;
+		}
+
+		#content .header .properties ul li .key .name{
+			padding: 0 3px;
+			margin-right: 5px;
+			background-color: rgba(255,255,255,0.1);
+			color: white;
+		}
+		#content .header .properties ul li .key .type{ color: #828282 }
+		/*#content .header .properties ul li .value span{ border-bottom: 1px solid #446380; }*/
+	</style>
+{% endblock %}
+
+{% block content %}
+	<section class="header env-child">
+		<h1>
+			<i class="sub devicon-{{ ext.get_devicon_class( env_group ) }}-plain"></i>
+			<span class="sub">
+				<a href="/env/{{ env_group }}">{{ env_group }} &gt;</a>
+			</span>
+			<span>{{ info.name }}</span>
+		</h1>
+
+		<div class="env-description">
+			<p>{{ info.description }}</p>
+			<p class="author">author @{{ info.author }}</p>
+
+			<p class="docker">
+				<i class="devicon-docker-plain"></i>
+				<span>Image on</span>
+				<span>
+					<a href="https://hub.docker.com/r/{{ info.docker_image }}">{{ info.docker_image }}</a>
+				</span>
+			</p>
+		</div>
+
+		<div class="properties">
+			<h3>properties</h3>
+			<ul>
+			{% for property in info.properties %}
+				{% if property.type != 'hidden' %}
+				<li class="clearfix">
+					<div class="fl key">
+						<span class="type">{{ property.type }}</span>
+						<span class="name">{{ property.name }}</span>
+					</div>
+					<div class="fl value">
+						<span>{{ property.help }}</span>
+					</div>
+				</li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+		</div>
+
+{# 		<div class="env-description">
+			<p>{{info}}</p>
+		</div>
+ #}
+	</section>
+
+	{{ super() }}
+
+{% endblock %}

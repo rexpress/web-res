@@ -59,7 +59,7 @@
 			<div class="header">
 				<h3>
 					<a href="/env/{{ group.env }}" class="color-{{ group.env }}">
-						<i class="devicon-{{ group.env }}-plain"></i>
+						<i class="devicon-{{ ext.get_devicon_class( group.env ) }}-plain"></i>
 						<span>{{ group.env }}</span>
 					</a>
 				</h3>

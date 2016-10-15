@@ -16,5 +16,5 @@
 
 	"log_history": true,
 
-	"imports" : [["datetime", "datetime"]]
+	"imports" : ["ext", ["datetime", "datetime"]]
 }
