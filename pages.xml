@@ -29,6 +29,12 @@
 		<template>home.html</template>
 	</page>
 
+	<!-- render env page-->
+	<page>
+		<url>/env/</url>
+		<context>{{ {'envs': envs} }}</context>
+		<template>env_summary.html</template>
+	</page>
 
 
 	<!-- render env_group(level=1) -->
@@ -93,13 +99,11 @@
 	{% endfor %}
 
 
+
+
 	<!-- render static pages -->
 	<page>
 		<url>/doc/</url>
-		<template>under_cons.html</template>
-	</page>
-	<page>
-		<url>/env/</url>
 		<template>under_cons.html</template>
 	</page>
 	<page>

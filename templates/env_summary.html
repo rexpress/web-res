@@ -1,0 +1,43 @@
+{% extends "/layout/default.html" %}
+
+{% block title %}
+	environments - regular.express
+{% endblock %}
+
+{% block head %}
+	{{ super() }}
+	
+	<link rel="stylesheet" type="text/css" href="/css/env_summary.css">
+{% endblock %}
+
+
+{% block content %}
+
+<h2 class="ctr">Environments</h2>
+
+<section id="env-list">
+	<ul>
+	{% for env_group, data in envs.items() %}
+		<li class="clearfix">
+			<div class="name fl">
+				<a href="/env/{{ env_group }}" class="color-{{ env_group }}">
+					<div><i class="sub devicon-{{ ext.get_devicon_class( env_group ) }}-plain"></i></div>
+					<div>{{ env_group }}</div>
+				</a>
+			</div>
+			<div class="description fl">
+				<div>{{ data.info.description }}</div>
+				<div class="children">
+					{% for child in data.children %}
+					<a href="/env/{{ env_group }}/{{ child }}">
+						<span class="tag">{{ child }}</span>
+					</a>
+					{% endfor %}
+				</div>
+			</div>
+		</li>
+	{% endfor %}
+	</ul>
+</section>
+
+{% endblock %}

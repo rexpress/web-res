@@ -74,8 +74,6 @@ html,body{ background-color: #eee }
 	padding: 5px 7px;
 	background-color: rgba(0, 0, 0, 0.4);
 	border-radius: 4px;
-	font-size: 12px;
-	transition: background-color 0.5s;
 }
 #content .header .children > a:hover > span{ background-color: rgba(255, 255, 255, 0.3) }
 
