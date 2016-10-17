@@ -107,6 +107,10 @@ section#news .prev-btn{ left: 20px }
 section#news .next-btn{ right: 20px; }
 
 
+section#news .groups{
+	overflow: hidden;
+}
+
 section#news .groups section{
 	width: 330px;
 	margin: 0 10px;

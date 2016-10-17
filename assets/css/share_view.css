@@ -3,6 +3,10 @@
 html, body{ background-color: #f3f3f3; }
 
 
+#content{
+	margin-bottom: 40px;
+}
+
 section#meta {
 	background-color: white;
 	padding: 20px 0;
@@ -22,20 +26,6 @@ section#meta .first h2{
 	font-size: 30px;
 	vertical-align: middle;
 }
-
-/*section#meta .first h2 .heart{
-	color: #666;
-	font-size: 20px;
-	vertical-align: middle;
-	cursor: pointer;
-	transition: color 0.5s;
-}
-
-section#meta .first h2 .heart:hover{
-	color: #e91e63;
-}*/
-
-
 section#meta .first .sub{
 	vertical-align: middle;
 }
@@ -69,7 +59,7 @@ section#meta .second .tags .env-child{ color: white; font-weight: bold; }
 
 
 section h3{
-	margin: 30px 0 3px 40px;
+	margin: 35px 0 3px 40px;
 	color: #555;
 	font-size: 26px;
 	font-weight: 300;
@@ -83,24 +73,40 @@ section .content {
 	color: #333;
 }
 
-section#properties ul{ list-style: none; }
-section#properties ul li{ margin: 0; padding: 3px 0; }
 
-section#properties ul li .key{
+
+section#properties .content{
+	padding: 20px 60px;
+}
+
+section#properties table{
+	width: 100%;
+	border: none;
+	outline: none;
+}
+
+
+section#properties table tr td{
+	margin: 0;
+	padding: 4px 0;
+}
+
+section#properties table tr td.key{
 	width: 100px;
 	text-align: right;
 	margin-right: 15px;
-	padding: 2px;
+	padding: 2px 15px 2px 2px;
 }
 
-section#properties ul li .value{
+section#properties table tr td.value{
+	width: 100%;
+}
+
+section#properties table tr td.value span{
 	background-color: #c6eaea;
 	padding: 2px 5px;
 }
 
-section > pre {
-	line-height: 1.3em;
-}
 
 
 
@@ -122,11 +128,13 @@ table.lines tr td{
 }
 
 table.lines tr td.line-number{
-	width: 50px;
+	width: 54px;
 	text-align: right;
 	border-right: 2px solid #11b9b9;
 	color: #777;
 }
+
+table.lines tr td.line-number > div{ width: 40px }
 
 table.lines tr td > div{
 	padding: 4px 7px;
@@ -139,6 +147,27 @@ table.lines tr td.data > div.e{
 
 table.lines tr td.line-number > div.e{
 	background-color: #efefef;
+}
+
+
+table.lines tr.columns td{
+	text-align: center;
+	border-bottom: 2px solid #11b9b9;
+	background-color: #c6eaea;
+	color: #004848;
+    font-weight: bold;
+}
+
+table.lines tr td.group-data{ border-right: 1px solid #e0e0e0 }
+table.lines tr td.group-data > div{
+	min-width: 200px;
+	text-align: center;
+	padding: 4px 25px;
+}
+table.lines tr td.group-data-null > div{
+	color: #999;
+	font-style: italic;
+	text-align: center;
 }
 
 

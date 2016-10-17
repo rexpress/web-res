@@ -27,10 +27,10 @@
 
 	{% if doc.properties %}
 	<ul class="properties">
-		{% for prop in doc.properties %}
+		{% for name, val in doc.properties.items() %}
 		<li>
-			<span class="key">{{ prop.name }}</span>
-			<span class="value">{{ prop.value }}</span>
+			<span class="key">{{ name|string|truncate(12, True) }}</span>
+			<span class="value">{{ val|string|truncate(32, True) }}</span>
 		</li>
 		{% endfor %}
 	</ul>

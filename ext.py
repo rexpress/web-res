@@ -10,6 +10,7 @@
 def customize_model(model) :
 	model.make_macro('#view',       'GET', '/re/_design/$1/_view/$2?$3')
 	model.make_macro('#view-eq',    'GET', '/re/_design/$1/_view/$2?keys=["$3"]&include_docs=true')
+	model.make_macro('#view-eq-im',    'GET', '/re/_design/$1/_view/$2?keys=["$3"]&include_docs=true', immutable=True)
 	model.make_macro('#view-range', 'GET', '/re/_design/$1/_view/$2?startkey=["$3",{}]&endkey=["$3"]&descending=true&include_docs=true')
 	model.make_macro('#git-env',    'GET', '/rexpress/environments/raw/master/$1', baseurl='https://github.com/', immutable=True, headers={})
 

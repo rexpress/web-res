@@ -29,6 +29,8 @@
 		<template>home.html</template>
 	</page>
 
+
+
 	<!-- render env page-->
 	<page>
 		<url>/env/</url>
@@ -84,15 +86,17 @@
 
 	<!-- render shares -->
 	{% for doc in all_shares.docs %}
+	{% set tmp = model.macro('#view-eq-im', 'share', 'share', doc._id) %}
+	{% set doc2 = tmp.rows[0].doc %}
+
 	<page>
 		<url>/share/{{ doc._id }}/</url>
 		<context>
-			{{
-				model.get(
-					api = '/re/_design/share/_view/share?keys=["' + doc._id +'"]&include_docs=true',
-					immutable = True
-				)
-			}}
+			{{ {
+				'doc'    : doc2,
+				'author' : tmp.rows[1].doc,
+				'env'    : envs[ doc2.env[0] ]['children'][ doc2.env[1] ]
+			} }}
 		</context>
 		<template>share_view.html</template>
 	</page>

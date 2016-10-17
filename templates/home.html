@@ -53,36 +53,38 @@
 	<i class="fa fa-chevron-left prev-btn"></i>
 	<i class="fa fa-chevron-right next-btn"></i>
 
-	<div class="groups clearfix">
-		{% for group in news %}
-		<section>
-			<div class="header">
-				<h3>
-					<a href="/env/{{ group.env }}" class="color-{{ group.env }}">
-						<i class="devicon-{{ ext.get_devicon_class( group.env ) }}-plain"></i>
-						<span>{{ group.env }}</span>
-					</a>
-				</h3>
-			</div>
-			<ul class="items">
-			{% for dat in group.data %}
-				{% if dat.doc.type == "share" %}
-				<li>
-					{{ share_macro.tile(
-						doc = dat.doc,
-						author = group.data[loop.index].doc,
-					) }}
-				</li>
-				{% endif %}
-			{% endfor %}
-			</ul>
-			
-			<div class="footer">
-				<a href="/env/{{ group.env }}" class="show-more">show more</a>
-			</div>
+	<div class="groups">
+		<div class="container clearfix" style="width: {{ news|length * 352 }}px">
+			{% for group in news %}
+			<section>
+				<div class="header">
+					<h3>
+						<a href="/env/{{ group.env }}" class="color-{{ group.env }}">
+							<i class="devicon-{{ ext.get_devicon_class( group.env ) }}-plain"></i>
+							<span>{{ group.env }}</span>
+						</a>
+					</h3>
+				</div>
+				<ul class="items">
+				{% for dat in group.data %}
+					{% if dat.doc.type == "share" %}
+					<li>
+						{{ share_macro.tile(
+							doc = dat.doc,
+							author = group.data[loop.index].doc,
+						) }}
+					</li>
+					{% endif %}
+				{% endfor %}
+				</ul>
+				
+				<div class="footer">
+					<a href="/env/{{ group.env }}" class="show-more">show more</a>
+				</div>
 
-		</section>
-		{% endfor %}
+			</section>
+			{% endfor %}
+		</div>
 	</div>
 </section>
 
