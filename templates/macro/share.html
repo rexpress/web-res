@@ -1,4 +1,12 @@
-{% macro tile(doc, author) -%}
+{% macro property_li(key, val) -%}
+<li>
+	<span class="key">{{ key|string|truncate(12, True) }}</span>
+	<span class="value">{{ val|string|truncate(32, True) }}</span>
+</li>
+{% endmacro %}
+
+
+{% macro tile(doc) -%}
 <div class="share-tile">
 	<a href="/share/{{ doc._id }}">
 		<h4>
@@ -10,9 +18,9 @@
 	</a>
 
 	<div class="tags">
-		<a href="/env/{{ doc.env[0] }}/{{ doc.env[1] }}">
+		<a href="/env/{{ doc.env_group.name }}/{{ doc.env_child.name }}">
 			<span class="tag tag-mini tag-special">
-				&gt; {{ doc.env[1] }}
+				&gt; {{ doc.env_child.name }}
 			</span>
 		</a>
 	
@@ -27,19 +35,26 @@
 
 	{% if doc.properties %}
 	<ul class="properties">
-		{% for name, val in doc.properties.items() %}
-		<li>
-			<span class="key">{{ name|string|truncate(12, True) }}</span>
-			<span class="value">{{ val|string|truncate(32, True) }}</span>
-		</li>
-		{% endfor %}
+		{% if doc.env_child.info %}
+			{% for prop in doc.env_child.info.properties %}
+			{% if prop.type != 'hidden' %}
+				{{ property_li(prop.name, doc.properties[ prop.name ]) }}
+			{% endif %}
+			{% endfor %}
+
+		{% else %}
+			{# for broken env #}
+			{% for key, val in doc.properties.items() %}
+				{{ property_li(key, val) }}
+			{% endfor %}
+		{% endif %}
 	</ul>
 	{% endif %}
 
 	<div class="last clearfix">
 		<div class="author fl">
-			<img class="profile" src="https://avatars.githubusercontent.com/u/{{ author.social_uid }}?size=25">
-			<span class="author-name">{{ author.name }}</span>
+			<img class="profile" src="https://avatars.githubusercontent.com/u/{{ doc.author.social_uid }}?size=25">
+			<span class="author-name">{{ doc.author.name }}</span>
 		</div>
 		<div class="created fr">
 			{{ datetime.fromtimestamp(doc.created / 1000).strftime('%Y-%m-%d %H:%M:%S') }}

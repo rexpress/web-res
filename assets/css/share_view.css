@@ -122,10 +122,23 @@ table.lines{
 	background-color: white;
 }
 
+
+table.lines tr th{
+	text-align: center;
+	border-bottom: 2px solid #11b9b9;
+	background-color: #c6eaea;
+	color: #004848;
+	font-weight: bold;
+	padding: 4px 7px;
+}
+
 table.lines tr td{
 	margin: 0;
 	padding: 0;
 }
+
+table.lines tr td.space,
+table.lines tr th.space{ width: 100% }
 
 table.lines tr td.line-number{
 	width: 54px;
@@ -135,39 +148,29 @@ table.lines tr td.line-number{
 }
 
 table.lines tr td.line-number > div{ width: 40px }
-
-table.lines tr td > div{
-	padding: 4px 7px;
-}
-
-table.lines tr td.line-number > div.o,
-table.lines tr td.data > div.e{
-	background-color: #f6fafd;
-}
-
-table.lines tr td.line-number > div.e{
-	background-color: #efefef;
-}
+table.lines tr td > div{ padding: 4px 7px }
 
 
-table.lines tr.columns td{
-	text-align: center;
-	border-bottom: 2px solid #11b9b9;
-	background-color: #c6eaea;
-	color: #004848;
-    font-weight: bold;
-}
+table.lines tr td.data > div.e,
+table.lines tr td.line-number > div.o{ background-color: #f6fafd }
+table.lines tr td.line-number > div.e{ background-color: #efefef }
 
-table.lines tr td.group-data{ border-right: 1px solid #e0e0e0 }
+
+table.lines tr td.group-data{ border-right: 1px solid #ddd }
 table.lines tr td.group-data > div{
 	min-width: 200px;
 	text-align: center;
 	padding: 4px 25px;
 }
+
 table.lines tr td.group-data-null > div{
 	color: #999;
 	font-style: italic;
 	text-align: center;
 }
+
+
+table.lines tr td span.m{ color: #005bce; font-style: italic; }
+table.lines tr td span.u{ color: #d83f00; font-style: italic; }
 
 

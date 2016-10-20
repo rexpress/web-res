@@ -17,19 +17,19 @@
 
 <section id="env-list">
 	<ul>
-	{% for env_group, data in envs.items() %}
+	{% for env_group in envs.values() %}
 		<li class="clearfix">
 			<div class="name fl">
-				<a href="/env/{{ env_group }}" class="color-{{ env_group }}">
-					<div><i class="sub devicon-{{ ext.get_devicon_class( env_group ) }}-plain"></i></div>
-					<div>{{ env_group }}</div>
+				<a href="/env/{{ env_group.name }}" class="color-{{ env_group.name }}">
+					<div>{{ ext.env_icon(env_group.info.icon)|safe }}</div>
+					<div>{{ env_group.name }}</div>
 				</a>
 			</div>
 			<div class="description fl">
-				<div>{{ data.info.description }}</div>
+				<div>{{ env_group.info.description }}</div>
 				<div class="children">
-					{% for child in data.children %}
-					<a href="/env/{{ env_group }}/{{ child }}">
+					{% for child in env_group.children %}
+					<a href="/env/{{ env_group.name }}/{{ child }}">
 						<span class="tag">{{ child }}</span>
 					</a>
 					{% endfor %}

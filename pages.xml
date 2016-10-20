@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <site>
-	{{ ext.customize_model(model) }}
+
+	{{ model.make_macro('#view',       'GET', '/re/_design/$1/_view/$2?$3') }}
+	{{ model.make_macro('#view-eq',    'GET', '/re/_design/$1/_view/$2?keys=["$3"]&include_docs=true') }}
+	{{ model.make_macro('#view-eq-im', 'GET', '/re/_design/$1/_view/$2?keys=["$3"]&include_docs=true', immutable=True) }}
+	{{ model.make_macro('#view-range', 'GET', '/re/_design/$1/_view/$2?startkey=["$3",{}]&endkey=["$3"]&descending=true&include_docs=true') }}
+	{{ model.make_macro('#git-env',    'GET', '/rexpress/environments/raw/master/$1', baseurl='https://github.com/', immutable=True, headers={}) }}
+	{{ model.make_macro('#view-range10', 'GET', '/re/_design/$1/_view/$2?startkey=["$3",{}]&endkey=["$3"]&descending=true&include_docs=true&limit=10') }}
 
 
-	<!-- global vars -->
+	{% set envinfo = EnvInfo(model) %}
 	{% set tags = model.macro('#view', 'tag', 'tags', 'group_level=1') %}
-	{% set envs = ext.get_envs(model) %}
+
 
 	{# set env_groups = sorted(env_groups, key=lambda doc: doc.value.max) #}
 
 	<!-- render home -->
+	{% set new_env_shares = model.macro('#view', 'env', 'envs', 'group_level=1').rows | sort(attribute='value.max', reverse=True) %}
 	<page>
 		<url>/</url>
-		<context type="json">
+		<context>
 			{
-				"news": [
-					{% for env, data in envs.items() %}
+				'news': [
+					{% for data in new_env_shares %}
+						{% set env_name = data.key[0] %}
 						{
-							"env": "{{ env }}",
-							"data": {{ json.dumps(data.shares) }}
-						}
-						{% if not loop.last %},{% endif %}
+							'env': {{ envinfo.getdict(env_name) }},
+							'data': {{ ext.process_shares(
+								model.macro('#view-range10', 'env', 'shares', env_name).rows,
+								envinfo = envinfo,
+							) }}
+						},
 					{% endfor %}
 				],
-				"tags": {{ json.dumps(tags) }}
+				'tags': {{ tags }}
 			}
 		</context>
 		<template>home.html</template>
@@ -34,24 +44,37 @@
 	<!-- render env page-->
 	<page>
 		<url>/env/</url>
-		<context>{{ {'envs': envs} }}</context>
+		<context>{{ {'envs': envinfo.groups} }}</context>
 		<template>env_summary.html</template>
 	</page>
 
 
 	<!-- render env_group(level=1) -->
-	{% for env_group, data in envs.items() %}
-	<page>
-		<url>/env/{{ env_group }}/</url>
-		<context>{{ data }}</context>
-		<template>list_env_group.html</template>
-	</page>
+	{% for group in envinfo.groups.values() %}
+		<page>
+			<url>/env/{{ group.name }}/</url>
+			<context>{{ {
+				'env'    : group,
+				'shares' : ext.process_shares(
+					model.macro('#view-range', 'env', 'shares', group.name).rows,
+					envinfo = envinfo,
+				)
+			} }}
+			</context>
+			<template>list_env_group.html</template>
+		</page>
 
 		<!-- env_child(level=2) -->
-		{% for env_child, data2 in data.children.items() %}
+		{% for child in group.children.values() %}
 			<page>
-				<url>/env/{{ env_group }}/{{ env_child }}/</url>
-				<context>{{ data2 }}</context>
+				<url>/env/{{ group.name }}/{{ child.name }}/</url>
+				<context>{{ {
+					'env'    : child,
+					'shares' : ext.process_shares(
+						model.macro('#view-range', 'env', 'shares', group.name + '","' + child.name).rows,
+						envinfo = envinfo,
+					)
+				} }}</context>
 				<template>list_env_child.html</template>
 			</page>
 		{% endfor %}
@@ -64,10 +87,13 @@
 	<page>
 		<url>/tag/{{ tag.key }}/</url>
 		<context>
-			{{ dict(
-				tag 	= tag.key,
-				shares 	= model.macro('#view-range', 'tag', 'shares', tag.key).rows,
-			) }}
+			{{ {
+				'tag'   : tag.key,
+				'shares': ext.process_shares(
+					model.macro('#view-range', 'tag', 'shares', tag.key).rows,
+					envinfo = envinfo,
+				)
+			} }}
 		</context>
 		<template>list_tag.html</template>
 	</page>
@@ -86,20 +112,13 @@
 
 	<!-- render shares -->
 	{% for doc in all_shares.docs %}
-	{% set tmp = model.macro('#view-eq-im', 'share', 'share', doc._id) %}
-	{% set doc2 = tmp.rows[0].doc %}
-
-	<page>
-		<url>/share/{{ doc._id }}/</url>
-		<context>
-			{{ {
-				'doc'    : doc2,
-				'author' : tmp.rows[1].doc,
-				'env'    : envs[ doc2.env[0] ]['children'][ doc2.env[1] ]
-			} }}
-		</context>
-		<template>share_view.html</template>
-	</page>
+		{% set d = model.macro('#view-eq-im', 'share', 'share', doc._id).rows %}
+		{% set share_doc = ext.process_shares(d, envinfo)[0] %}
+		<page>
+			<url>/share/{{ share_doc._id }}/</url>
+			<context>{{ {'doc': share_doc} }}</context>
+			<template>share_view.html</template>
+		</page>
 	{% endfor %}
 
 
@@ -110,12 +129,5 @@
 		<url>/doc/</url>
 		<template>under_cons.html</template>
 	</page>
-	<page>
-		<url>/down/</url>
-		<template>under_cons.html</template>
-	</page>
-	<page>
-		<url>/tag/</url>
-		<template>under_cons.html</template>
-	</page>
+
 </site>

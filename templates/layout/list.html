@@ -13,14 +13,7 @@
 		{% if shares %}
 			<ul id="lists" class="clearfix">
 			{% for share in shares %}
-				{% if share.doc.type == "share" %}
-					<li>
-						{{ share_macro.tile(
-							doc = share.doc,
-							author = shares[ loop.index ].doc,
-						) }}
-					</li>
-				{% endif %}
+				<li>{{ share_macro.tile(share) }}</li>
 			{% endfor %}
 			</ul>
 		{% else %}
