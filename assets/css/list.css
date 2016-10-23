@@ -32,7 +32,7 @@ html,body{ background-color: #eee }
 }
 
 .env-description p{
-	margin: 5px 0;
+	margin: 5px;
 }
 .env-description a{ color: #bbb; text-decoration: none; }
 .env-description a:hover{ text-decoration: underline; }
@@ -105,4 +105,13 @@ ul#lists > li .tags{
 	color: #333;
 	font-size: 25px;
 	font-weight: 300;
+}
+
+
+@media (max-width: 700px) {
+	ul#lists{ padding: 10px }
+	ul#lists > li{
+		width: 100%;
+		margin-bottom: 10px;
+	}
 }

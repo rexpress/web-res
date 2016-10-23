@@ -47,3 +47,15 @@ section#env-list ul li .description .children a .tag{
 	color: #111;
 }
 section#env-list ul li .description .children a:hover .tag{ background-color: #ccc }
+
+
+@media (max-width: 700px) {
+	section#env-list ul li .name{
+		float: none;
+		width: 100%;
+	}
+	section#env-list ul li .description{
+		float: none;
+		text-align: center;
+	}
+}

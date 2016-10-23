@@ -38,9 +38,7 @@
 	
 	<i class="fa fa-chevron-left prev-btn"></i>
 	<i class="fa fa-chevron-right next-btn"></i>
-
 	{% set news = news * 3 %}
-
 	<div class="groups">
 		<div class="container clearfix" style="width: {{ news|length * 352 }}px">
 			{% for g in news %}
@@ -60,7 +58,7 @@
 
 				<div class="ul-wrap">
 					<ul class="items">
-					{% for doc in g.data %}
+					{% for doc in g.data * 4 %}
 						<li>{{ share_macro.tile(doc) }}</li>
 					{% endfor %}
 					</ul>
@@ -79,14 +77,13 @@
 					var sectionWidth = $('#news .groups section').width();
 
 					var dom = $(event.target).parent().find('.groups');
-					var w = dom.width() - sectionWidth;
-					var cnt = w / sectionWidth;
+					var w = dom.width();// - sectionWidth;
 					var dest = dom.scrollLeft();
 
 					if ($(event.target).hasClass("prev-btn"))	dest -= w;
 					else										dest += w;
 
-					dom.animate({scrollLeft: dest}, cnt*150);
+					dom.animate({scrollLeft: dest}, (w / sectionWidth) * 150);
 				});
 
 				$('#news section').find('.up-btn, .down-btn').click(function (event) {
@@ -95,18 +92,15 @@
 					var h = dom.height() - 100;
 					var dest = dom.scrollTop();
 
-					if ($(event.target).hasClass("up-btn")) {
-						dest -= h;
-						if (dest <= 0)
+					if ($(event.target).hasClass("up-btn"))	dest -= h;
+					else 									dest += h;
+
+					dom.animate({'scrollTop': dest}, 500, function() {
+						if ($(this).scrollTop() > 0)
+							sec.find('.up-wrap').show();
+						else
 							sec.find('.up-wrap').hide();
-
-					}else {
-						dest += h;
-						sec.find('.up-wrap').show();
-					}
-
-
-					dom.animate({'scrollTop': dest}, 500);
+					});
 				});
 			})();
 	</script>

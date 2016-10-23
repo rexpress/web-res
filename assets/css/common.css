@@ -178,3 +178,26 @@ h2.ctr:after{
 	display: block;
 	background-color: #46AEDA;
 }
+
+
+
+@media (max-width: 700px) {
+	header{
+		padding: 13px 15px 8px 15px;
+	}
+
+	header #logo{
+		float: none;
+		width: 170px;
+		height: 36px;
+	}
+	header #logo #logo-content{ background-size: 170px }
+
+	header ul#gnb{
+		float: none;
+		margin: 0;
+		/*border-top: 1px solid rgba(255,255,255,0.4);*/
+	}
+	header ul#gnb li{ margin: 0 10px 0 0 }
+	header ul#gnb li a{ font-size: 12px }
+}

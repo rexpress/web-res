@@ -58,3 +58,18 @@
 }
 #content .header .properties ul li .key .type{ color: #828282 }
 /*#content .header .properties ul li .value span{ border-bottom: 1px solid #446380; }*/
+
+
+
+@media (max-width: 700px) {
+	#content .header h1{
+		font-size: 30px;
+	}
+	#content > section.header h1 .sub{
+		display: block;
+		font-size: 20px;
+	}
+	#content .header .properties ul li > div.key{
+		margin-left: 0;
+	}
+}

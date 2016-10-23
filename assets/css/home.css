@@ -70,15 +70,19 @@ section#news{
 section#news .prev-btn,
 section#news .next-btn{
 	position: absolute;
-	top: 250px;
+	top: 350px;
 
 	font-size: 35px;
-    color: #666;
-    cursor: pointer;
+	color: #666;
+	cursor: pointer;
+	transition: color 0.5s;
+	z-index: 3;
 }
 section#news .prev-btn{ left: 20px }
 section#news .next-btn{ right: 10px; }
 
+section#news .prev-btn:hover,
+section#news .next-btn:hover{ color: #999 }
 
 section#news .groups{
 	overflow: hidden;
@@ -116,7 +120,7 @@ section#news .groups section .header h3 a .env{ margin-top: -8px; font-size: 22p
 
 
 section#news .groups section .ul-wrap{
-	height: 500px;
+	max-height: 500px;
 	overflow: hidden;
 }
 
@@ -152,22 +156,12 @@ section#news .groups section .down-wrap i{
 	font-size: 20px;
 	color: #ddd;
 	cursor: pointer;
+	transition: color 0.5s;
 }
+section#news .groups section .up-wrap i:hover,
+section#news .groups section .down-wrap i:hover{ color: white }
 
 
-/*section#news .groups section .down-wrap a.show-more{
-	display: block;
-	width: 100%;
-	padding: 3px 0;
-
-	background-color: #eee;
-	font-size: 13px;
-	
-	text-align: center;
-	color: #666;
-	text-decoration: none;
-}
-*/
 
 /*
  * local web section
@@ -251,3 +245,38 @@ section#environments ul li.with-text{ font-size: 23px; padding-top: 27px; }
 footer{
 	background-color: #333;
 }
+
+
+
+
+
+
+@media (max-width: 700px) {
+	section#search #search-bar{
+		width: 80%;
+		padding: 5px;
+	}
+	section#search #search-bar input{ width: auto }
+
+	section#news{
+		padding: 0 20px;
+	}
+	section#news .prev-btn, section#news .next-btn{
+		font-size: 20px;
+	}
+	section#news .prev-btn{ left: 5px }
+	section#news .next-btn{ right: 2px }
+
+
+	section#news .groups > .container{ margin-left: -7px }
+
+	section#lw .screenshot img{
+		width: 100%;
+	}
+
+	section#environments ul{
+		width: 100%;
+	}
+}
+
+

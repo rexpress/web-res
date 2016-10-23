@@ -30,7 +30,7 @@ def process_shares(shares, envinfo) :
 
 		output.append(o)
 
-	return output * 4
+	return output
 
 
 def env_icon(icon_info) :
