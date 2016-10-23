@@ -13,8 +13,6 @@
 	{% set tags = model.macro('#view', 'tag', 'tags', 'group_level=1') %}
 
 
-	{# set env_groups = sorted(env_groups, key=lambda doc: doc.value.max) #}
-
 	<!-- render home -->
 	{% set new_env_shares = model.macro('#view', 'env', 'envs', 'group_level=1').rows | sort(attribute='value.max', reverse=True) %}
 	<page>
@@ -33,7 +31,13 @@
 						},
 					{% endfor %}
 				],
-				'tags': {{ tags }}
+				'tags': [
+					{% for tag in tags.rows | sort(attribute='value.count', reverse=True)  %}
+						{% if loop.index <= 10 %}
+							'{{ tag.key }}',
+						{% endif %}
+					{% endfor %}
+				]
 			}
 		</context>
 		<template>home.html</template>

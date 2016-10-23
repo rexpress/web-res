@@ -57,10 +57,10 @@ html, body, pre{
 
 /* layout/default */
 
-.color-python{ color: #3671a3 }
-.color-java{ color: #eb8000 }
-.color-flume{ color: #672c00; }
-.color-hive{ color: #a58400; }
+.color-python	{ color: #3671a3 !important; }
+.color-java		{ color: #eb8000 !important; }
+.color-flume	{ color: #672c00 !important; }
+.color-hive		{ color: #a58400 !important; }
 
 
 header{
@@ -149,6 +149,12 @@ footer{
 .tag-mini.tag-special{ padding-left: 6px; }
 
 
+
+.tag-alpha{
+	background-color: #0d2748;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+.tag-alpha:hover{ background-color: rgba(255, 255, 255, 0.3) }
 
 
 h2.ctr{

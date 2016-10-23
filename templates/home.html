@@ -10,37 +10,23 @@
 {% block head %}
 	{{ super() }}
 	<link rel="stylesheet" type="text/css" href="/css/home.css">
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 {% endblock %}
 
 
 {% block content %}
-<section id="welcome">
-	<h1>
-		Test and share regular expressions with simple tool<br>
-		running in fully isolated environment
-	</h1>
-
-	<div class="buttons">
-		<a href="/dowload">download</a>
-	</div>
-
-	<div class="screenshot">
-		<img src="https://placehold.it/700x300">
-	</div>
-</section>
 
 <section id="search">
 	<div id="search-bar">
-		<input type="text" name="search" placeholder="Search for regex test result of modules">
 		<i class="fa fa-search" aria-hidden="true"></i>
+		<input type="text" name="search" placeholder="Search regular.express">
 	</div>
 
 	<div class="tags">
-		{% for tag in tags.rows : %}
-		<a href="/tag/{{ tag.key }}">
-			<span class="tag">
-				# {{ tag.key }}
-			</span>
+		{% for tag in tags : %}
+		<a href="/tag/{{ tag }}">
+			<span class="tag tag-alpha"># {{ tag }}</span>
 		</a>
 		{% endfor %}
 	</div>
@@ -48,10 +34,12 @@
 
 
 <section id="news">
-	<h2 class="ctr">New sharings</h2>
+	<h2 class="ctr">New Sharings</h2>
 	
 	<i class="fa fa-chevron-left prev-btn"></i>
 	<i class="fa fa-chevron-right next-btn"></i>
+
+	{% set news = news * 3 %}
 
 	<div class="groups">
 		<div class="container clearfix" style="width: {{ news|length * 352 }}px">
@@ -60,24 +48,82 @@
 				<div class="header">
 					<h3>
 						<a href="/env/{{ g.env.name }}" class="color-{{ g.env.name }}">
-							{{ ext.env_icon(g.env.info.icon)|safe }}
-							<span>{{ g.env.name }}</span>
+							<div>{{ ext.env_icon(g.env.info.icon)|safe }}</div>
+							<div class="env">{{ g.env.name }}</div>
 						</a>
 					</h3>
 				</div>
-				<ul class="items">
-				{% for doc in g.data %}
-					<li>{{ share_macro.tile(doc) }}</li>
-				{% endfor %}
-				</ul>
+
+				<div class="up-wrap">
+					<i class="fa fa-chevron-up up-btn" aria-hidden="true"></i>
+				</div>
+
+				<div class="ul-wrap">
+					<ul class="items">
+					{% for doc in g.data %}
+						<li>{{ share_macro.tile(doc) }}</li>
+					{% endfor %}
+					</ul>
+				</div>
 				
-				<div class="footer">
-					<a href="/env/{{ g.env.name }}" class="show-more">show more</a>
+				<div class="down-wrap">
+					<i class="fa fa-chevron-down down-btn" aria-hidden="true"></i>
 				</div>
 
 			</section>
 			{% endfor %}
 		</div>
+		<script type="text/javascript">
+			(function() {
+				$('#news').find('.prev-btn, .next-btn').click(function (event) {
+					var sectionWidth = $('#news .groups section').width();
+
+					var dom = $(event.target).parent().find('.groups');
+					var w = dom.width() - sectionWidth;
+					var cnt = w / sectionWidth;
+					var dest = dom.scrollLeft();
+
+					if ($(event.target).hasClass("prev-btn"))	dest -= w;
+					else										dest += w;
+
+					dom.animate({scrollLeft: dest}, cnt*150);
+				});
+
+				$('#news section').find('.up-btn, .down-btn').click(function (event) {
+					var sec = $(event.target).parent().parent();
+					var dom = sec.find('.ul-wrap');
+					var h = dom.height() - 100;
+					var dest = dom.scrollTop();
+
+					if ($(event.target).hasClass("up-btn")) {
+						dest -= h;
+						if (dest <= 0)
+							sec.find('.up-wrap').hide();
+
+					}else {
+						dest += h;
+						sec.find('.up-wrap').show();
+					}
+
+
+					dom.animate({'scrollTop': dest}, 500);
+				});
+			})();
+	</script>
+	</div>
+</section>
+
+<section id="lw" class="clearfix">
+	<h2 class="ctr">Test and share regex with our app</h2>
+	<div class="description">
+		You can test regular.expression on special modules like flume, hive, nginx.<br>
+		These modules are run in fully isolated environment in docker.
+	</div>
+	<div class="screenshot">
+		<img src="https://placehold.it/700x300">
+	</div>
+	<div class="buttons">
+		<a href="/dowload">Download</a>
 	</div>
 </section>
 

@@ -10,7 +10,7 @@
 
 def get_shares(design_name, key, envinfo) :
 	global model
-	
+
 	return process_shares(
 		model.macro('#view-range', design_name, 'shares', key).rows,
 		envinfo = envinfo,
@@ -30,7 +30,7 @@ def process_shares(shares, envinfo) :
 
 		output.append(o)
 
-	return output
+	return output * 4
 
 
 def env_icon(icon_info) :

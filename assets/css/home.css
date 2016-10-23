@@ -1,6 +1,8 @@
 @charset "utf-8";
 
-
+html,body{
+	background-color: #eee;
+}
 
 section > .description{
 	text-align: center;
@@ -8,56 +10,20 @@ section > .description{
 }
 
 
-
-
-/*header{ background-color: #0d2748 }
-header #logo #logo-content{ background-image: url('../images/logo-white.png'); }*/
-
-
-section#welcome{
-	background-color: #123765;
-	padding: 30px 0 40px;
-	text-align: center;
-}
-
-section#welcome h1{
-	font-weight: 300;
-	font-size: 37px;
-	color: white;
-	margin: 10px 0;
-}
-
-section#welcome .buttons{ margin: 20px 0 30px }
-
-section#welcome .buttons a{
-	display: inline-block;
-	*zoom: 1;
-
-	padding: 8px 18px;
-	border: 1px solid white;
-	
-	background-color: rgba(0,0,0,.15);
-	color: white;
-	text-decoration: none;
-	font-weight: 300;
-
-	transition: background-color 0.5s;
-}
-section#welcome .buttons a:hover{
-	background-color: rgba(255,255,255,.1);
-}
-
-
+/*
+ * search section 
+ *
+ */
 section#search{
-	margin: 60px 0 40px;
+	padding: 60px 0 50px;
+	background-color: #123765;
 }
 
 section#search #search-bar{
 	width: 500px;
 	margin: 0 auto;
-	padding: 8px 15px;
-	border: 1px solid #ccc;
-	border-radius: 25px;
+	padding: 8px 5px;
+	border-bottom: 1px solid white;
 }
 
 section#search #search-bar input{
@@ -65,15 +31,19 @@ section#search #search-bar input{
 	border: none;
 	outline: none;
 	font-size: 18px;
+	margin-left: 10px;
+
+	background-color: transparent;
+	color: white;
+	font-weight: 300;
 }
 
 section#search #search-bar i.fa{
-	float: right;
-	color: #777;
-	padding: 1px 3px;
+	float: left;
+	color: white;
+	padding: 4px 0;
 	cursor: pointer;
 }
-section#search #search-bar i.fa:hover{ color: #333 }
 
 
 section#search .tags{
@@ -82,16 +52,19 @@ section#search .tags{
 }
 section#search .tags .tag{
 	font-size: 12px;
-	background-color: #eee;
-	color: #333;
+	color: white;
 }
 
 
-
+/*
+ * news section 
+ *
+ */
 section#news{
 	position: relative;
 	margin: 50px 0;
 	padding: 0 50px;
+	background-color: #eee;
 }
 
 section#news .prev-btn,
@@ -100,11 +73,11 @@ section#news .next-btn{
 	top: 250px;
 
 	font-size: 35px;
-    color: #ccc;
+    color: #666;
     cursor: pointer;
 }
 section#news .prev-btn{ left: 20px }
-section#news .next-btn{ right: 20px; }
+section#news .next-btn{ right: 10px; }
 
 
 section#news .groups{
@@ -112,45 +85,77 @@ section#news .groups{
 }
 
 section#news .groups section{
+	position: relative;
 	width: 330px;
 	margin: 0 10px;
 	padding: 0;
-	background-color: #eee;
-	border: 1px solid #ddd;
-	border-radius: 5px;
 	float: left;
 }
 
 section#news .groups section .header{
 	font-size: 16px;
 	vertical-align: middle;
-	padding: 12px 20px 0;
-	border-radius: 5px 5px 0 0;
+	padding: 12px 20px 8px;
+	background-color: #333;
+	text-align: center;
 }
 
 section#news .groups section .header h3{
 	margin: 0;
-	font-weight: normal;
+	font-weight: 300;
 	font-size: 20px;
 }
-section#news .groups section .header h3 a{ text-decoration: none; }
+section#news .groups section .header h3 a{
+	text-decoration: none;
+	color: #ccc;
+}
 
-section#news .groups section ul.items {
+section#news .groups section .header h3 a i{ font-size: 18px }
+section#news .groups section .header h3 a .env{ margin-top: -8px; font-size: 22px }
+
+
+
+section#news .groups section .ul-wrap{
+	height: 500px;
+	overflow: hidden;
+}
+
+
+section#news .groups section ul.items{
 	list-style: none; 
-	margin: 0 10px;
+	margin: 0;
 	padding: 0;
 }
 
-section#news .groups section ul.items > li {
-	margin: 10px 0 0;
+section#news .groups section ul.items > li{
+	margin: 0;
 	padding: 0;
+	border-bottom: 2px solid #ddd;
 }
 
-section#news .groups section .footer{
-	margin: 3px 10px;
+
+section#news .groups section .up-wrap{
+	position: absolute;
+	width: 100%;
+	display: none;
 }
 
-section#news .groups section .footer a.show-more{
+section#news .groups section .up-wrap,
+section#news .groups section .down-wrap{
+	margin: 0;
+	padding: 2px 0;
+	background-color: #555;
+	text-align: center;
+}
+section#news .groups section .up-wrap i,
+section#news .groups section .down-wrap i{
+	font-size: 20px;
+	color: #ddd;
+	cursor: pointer;
+}
+
+
+/*section#news .groups section .down-wrap a.show-more{
 	display: block;
 	width: 100%;
 	padding: 3px 0;
@@ -162,10 +167,58 @@ section#news .groups section .footer a.show-more{
 	color: #666;
 	text-decoration: none;
 }
+*/
+
+/*
+ * local web section
+ *
+ */
+section#lw{
+	background-color: white;
+	padding: 30px 0 40px;
+	text-align: center;
+}
+
+section#lw h1{
+	font-weight: 300;
+	font-size: 37px;
+	/*color: white;*/
+	margin: 10px 0;
+}
+
+section#lw .description{
+	color: #666;
+	font-size: 17px;
+	font-weight: 300;
+	margin: -7px 0 13px 0;
+}
+
+section#lw .buttons{ margin: 20px 0 30px }
+
+section#lw .buttons a{
+	display: inline-block;
+	*zoom: 1;
+
+	padding: 13px 38px;
+	
+	background-color: #123765;
+	color: white;
+	border-radius: 5px;
+	text-decoration: none;
+	font-weight: 300;
+
+	transition: background-color 0.5s;
+}
+section#lw .buttons a:hover{
+	background-color: #264058;
+}
 
 
 
-
+/*
+ * environments section
+ *
+ */
 section#environments{
 	padding: 25px 50px;
 	background-color: #333;
