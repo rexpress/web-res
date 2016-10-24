@@ -38,7 +38,7 @@
 	
 	<i class="fa fa-chevron-left prev-btn"></i>
 	<i class="fa fa-chevron-right next-btn"></i>
-	{% set news = news * 3 %}
+	{% set news = news %}
 	<div class="groups">
 		<div class="container clearfix" style="width: {{ news|length * 352 }}px">
 			{% for g in news %}
@@ -58,7 +58,7 @@
 
 				<div class="ul-wrap">
 					<ul class="items">
-					{% for doc in g.data * 4 %}
+					{% for doc in g.data %}
 						<li>{{ share_macro.tile(doc) }}</li>
 					{% endfor %}
 					</ul>
