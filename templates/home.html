@@ -21,8 +21,10 @@
 
 <section id="search">
 	<div id="search-bar">
-		<i class="fa fa-search" aria-hidden="true"></i>
-		<input type="text" name="search" placeholder="Search regular.express">
+		<form name="fsearch" action="/search" method="GET">
+			<i class="fa fa-search" aria-hidden="true" onclick="if (fsearch.q.value) fsearch.submit()"></i>
+			<input type="text" name="q" placeholder="Search regular.express">
+		</form>
 	</div>
 
 	<div class="tags">

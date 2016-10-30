@@ -1,0 +1,41 @@
+{% extends "/layout/default.html" %}
+
+{% block head %}
+	{{ super() }}
+	<style type="text/css">
+		section#search{ padding-top: 40px }
+	</style>
+{% endblock %}
+
+{% block content %}
+
+<section id="search">
+	<div id="search-bar">
+		<form name="fsearch" action="/search" method="GET">
+			<i class="fa fa-search" aria-hidden="true" onclick="search.submit()"></i>
+			<input type="text" name="q" placeholder="Search with Google">
+		</form>
+	</div>
+</section>
+
+<script type="text/javascript">
+	(function() {
+		var queryDict = {}
+		location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]});
+		
+		fsearch.q.value = decodeURIComponent(queryDict['q']);
+	})();
+
+	
+	(function() {
+		var cx = '015180198996314708970:hkuilb1xa7c';
+		var gcse = document.createElement('script');
+		gcse.type = 'text/javascript';
+		gcse.async = true;
+		gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(gcse, s);
+	})();
+</script>
+<gcse:searchresults-only></gcse:searchresults-only>
+{% endblock %}

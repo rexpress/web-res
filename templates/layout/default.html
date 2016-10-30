@@ -38,16 +38,21 @@
 			</a>
 		</div>
 
+		{% macro gnb_li(url, title, pageurl) -%}
+		<li>
+		{% if url == pageurl or url == pageurl[0:-1] %}
+			<a href="{{ url }}" class="selected">{{ title }}</a>
+		{% else %}
+			<a href="{{ url }}">{{ title }}</a>
+		{% endif %}
+		</li>
+		{% endmacro %}
+
+
 		<ul id="gnb" class="fl clearfix">
-			<li>
-				<a href="/">HOME</a>
-			</li>
-			<li>
-				<a href="/env">ENVIRONMENTS</a>
-			</li>
-			<li>
-				<a href="/doc">DOCUMENTATION</a>
-			</li>
+			{{ gnb_li('/', 'HOME', _page.url) }}
+			{{ gnb_li('/env', 'ENVIRONMENTS', _page.url) }}
+			{{ gnb_li('/doc', 'DOCUMENTATION', _page.url) }}
 		</ul>
 	</header>
 	

@@ -130,6 +130,17 @@
 
 	<!-- render static pages -->
 	<page>
+		<url>/search/</url>
+		<template>search.html</template>
+	</page>
+
+	<page>
+		<url>/sitemap.xml</url>
+		<context>{{ {'shares':all_shares, 'envs':envinfo.groups} }}</context>
+		<template>_sitemap.xml</template>
+	</page>
+
+	<page>
 		<url>/doc/</url>
 		<template>under_cons.html</template>
 	</page>
