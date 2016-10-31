@@ -1,14 +1,19 @@
 {% extends "/layout/list.html" %}
 
-{% block title %}
-	{{ env.info.title }} - regular.express
-{% endblock %}
+{% block title %}{{ env.info.title }} - Environment{% endblock %}
 
 {% block head %}
 	{{ super() }}
-
 	<link rel="stylesheet" type="text/css" href="/css/env_child.css">
 {% endblock %}
+
+{% block meta %}
+	<meta name="Subject" content="{{ env.info.title }} environment">
+	<meta name="Description" content="{{ env.info.title }} environment in regular.express"> 
+	<meta name="Classification" content="environments/{{ env.parent.name }}">
+	<meta property="og:description" content="{{ env.info.title }} environment in regular.express">
+{% endblock %}
+
 
 {% block content %}
 	<section class="header env-child">

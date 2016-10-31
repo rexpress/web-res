@@ -1,19 +1,19 @@
 {% extends "/layout/default.html" %}
 
-{% block title %}
-	{{ doc.title }} - regular.express
-{% endblock %}
+{% block title %}{{ doc.title }} - regular.express{% endblock %}
 
 {% block head %}
 	{{ super() }}
+	<link rel="stylesheet" type="text/css" href="/css/share_view.css">
+{% endblock %}
 
+{% block meta %}
 	<meta name="Subject" content="{{ doc.title }}">
 	<meta name="Description" content="{{ doc.description }}"> 
 	<meta name="Classification" content="{{ doc.env_child.name }}">
 	<meta property="og:description" content="{{ doc.description|truncate(32, True) }}">
-
-	<link rel="stylesheet" type="text/css" href="/css/share_view.css">
 {% endblock %}
+
 
 
 {% block content %}

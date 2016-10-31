@@ -1,7 +1,12 @@
 {% extends "/layout/list.html" %}
 
-{% block title %}
-	{{ env.info.title }} - regular.express
+{% block title %}{{ env.info.title }} - Environment{% endblock %}
+
+{% block meta %}
+	<meta name="Subject" content="{{ env.info.title }} environment">
+	<meta name="Description" content="{{ env.info.title }} environment in regular.express"> 
+	<meta name="Classification" content="environments">
+	<meta property="og:description" content="{{ env.info.title }} environment in regular.express">
 {% endblock %}
 
 
