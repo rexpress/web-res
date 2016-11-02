@@ -14,7 +14,7 @@
 		"pages_xml": "pages.xml"
 	},
 
-	"log_history": true,
+	"log_history": false,
 
 	"imports" : ["ext", ["ds", "EnvInfo"], ["datetime", "datetime"]]
 }

@@ -25,13 +25,13 @@ class EnvInfo :
 			if env_child == '_info' :
 				self.data[ env_group ] = EnvGroup(
 					name = env_group,
-					info = model.macro('#git-env', env_group + '/_info.json'),
+					info = model.macro('#git-env', env_group + '/_info.json#' + info['sha']),
 				)
 
 			else :
 				self.data[ env_group ].append_child( EnvChild(
 					name = env_child,
-					info = model.macro('#git-env', env_group + '/' + env_child + '.json'),
+					info = model.macro('#git-env', env_group + '/' + env_child + '.json#' + info['sha']),
 				))
 
 
@@ -56,6 +56,12 @@ class EnvInfo :
 			else :
 				if loose_mode : return {'name': child}
 				else : return None
+
+
+	def json(self) :
+		import ast, json
+		d = ast.literal_eval( str(self.groups) )
+		return json.dumps(d)
 
 
 class EnvBase :

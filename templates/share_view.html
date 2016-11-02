@@ -9,9 +9,9 @@
 
 {% block meta %}
 	<meta name="Subject" content="{{ doc.title }}">
-	<meta name="Description" content="{{ doc.description }}"> 
+	<meta name="Description" content="{{ doc.description|replace('\n', ' ') }}"> 
 	<meta name="Classification" content="{{ doc.env_child.name }}">
-	<meta property="og:description" content="{{ doc.description|truncate(32, True) }}">
+	<meta property="og:description" content="{{ doc.description|replace('\n', ' ')|truncate(32, True) }}">
 {% endblock %}
 
 

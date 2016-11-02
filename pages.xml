@@ -136,6 +136,21 @@
 	</page>
 
 	<page>
+		<url>/google424b7f5eab9d82c4.html</url>
+		<content>google-site-verification: google424b7f5eab9d82c4.html</content>
+	</page>
+
+	<page>
+		<url>/CNAME</url>
+		<content>regular.express</content>
+	</page>
+
+	<page>
+		<url>/environments.json</url>
+		<content>{{ envinfo.json() }}</content>
+	</page>
+
+	<page>
 		<url>/search/</url>
 		<template>search.html</template>
 	</page>
@@ -147,7 +162,7 @@
 
 	<page>
 		<url>/doc/</url>
-		<template>under_cons.html</template>
+		<template>_under_cons.html</template>
 	</page>
 
 </site>
