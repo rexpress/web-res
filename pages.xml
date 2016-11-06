@@ -125,6 +125,11 @@
 		</page>
 	{% endfor %}
 
+	<page>
+		<url>/share/</url>
+		<context>{{ {'shares':all_shares, 'envs':envinfo.groups} }}</context>
+		<template>share_view_dy.html</template>
+	</page>
 
 
 

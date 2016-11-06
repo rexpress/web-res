@@ -1,0 +1,327 @@
+{% extends "/layout/default.html" %}
+
+{% block title %}regular.express{% endblock %}
+
+{% block head %}
+	{{ super() }}
+	<link rel="stylesheet" type="text/css" href="/css/share_view.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/json2/20160511/json2.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	
+	<script type="text/javascript">
+		var docs = [{% for o in shares.docs %}"{{ o._id }}"{% if not loop.last %},{% endif %}{% endfor %}];
+		var envs = {{ json.dumps(envs)|safe }};
+
+		var docId;
+
+		function twolenNum(value) {
+			if (value < 10) return '0' + value;
+			else return value;
+		}
+
+		try {
+			docId = location.hash.split('/')[1];
+		}catch(e) {
+			alert('Invalid path');
+			location.replace('/');
+		}
+
+		if (docs.indexOf(docId) != -1)
+			location.replace('/share/' + docId);
+		
+		else {
+
+			Handlebars.registerHelper('ymdhis', function(value, options) {
+				var d = new Date(value);
+				return d.getFullYear() + '-' + twolenNum(d.getMonth() + 1) + '-' + twolenNum(d.getDate()) + ' '
+					+ twolenNum(d.getHours()) + ':' + twolenNum(d.getMinutes()) + ':' + twolenNum(d.getSeconds());
+			});
+
+			Handlebars.registerHelper('inc', function(value, options) {
+				return parseInt(value) + 1;
+			});
+			Handlebars.registerHelper('eo', function(value, options) {
+				return ['e', 'o'][(value+1) % 2];
+			});
+			Handlebars.registerHelper('mu', function(value, options) {
+				if (value) return 'm';
+				else return 'u';
+			});
+			Handlebars.registerHelper('getProperty', function(object, property, options) {
+				return object[property];
+			});
+			Handlebars.registerHelper('propertyClass', function(object, property, options) {
+				if (property in object) return '';
+				else return ' class="no-value"';
+			});
+
+			var it_val = 0;
+			Handlebars.registerHelper('upit', function() {
+				++it_val;
+			});
+			Handlebars.registerHelper('eoit', function() {
+				return ['e', 'o'][(it_val) % 2];
+			});
+
+			Handlebars.registerHelper('test', function(value, options) {
+				console.log(value);
+				return JSON.stringify(value);
+			});
+
+
+
+
+
+			$.ajax({
+				'type': 'GET',
+				'url': 'https://rexpress.cloudant.com/re/_design/share/_view/share?keys=["' + docId + '"]&include_docs=true',
+				'headers': {
+					'Authorization': 'Basic d2VyZW1hcmVzZWxheXNlbnJ5aW5jZXNzOmE1MjU3YmY3NTNjNzlhMTU2MGNkMjhlOGE2ZjBjYWJhMGI2YzViMmE='
+				}
+			}).done(function(data) {
+				if (data.rows.length == 0) {
+					alert('Invalid Url');
+					location.replace('/');
+				}
+
+				var doc = data.rows[0].doc;
+				doc.author = data.rows[1].doc;
+				var env;
+
+				try {
+					env = envs[doc.env[0]].children[doc.env[1]];
+
+					for (var i in env.info.properties) {
+						if (env.info.properties[i].type == 'hidden')
+							env.info.properties.splice(i, 1);
+					}
+
+				}catch(e) {}
+
+				doc.output.groupType = (doc.output.type.toUpperCase() == 'GROUP');
+				doc.output.stringType = (doc.output.type.toUpperCase() == 'STRING');
+				doc.output.matchType = (doc.output.type.toUpperCase() == 'MATCH');
+				
+				for (var i in doc.output.result.resultList) {
+					if (doc.output.result.resultList[i] == null)
+						doc.output.result.resultList[i] = { 'list': [ null ] };
+				}
+
+				// console.log(doc);
+				// console.log(env);
+
+				var template = Handlebars.compile( $('#template').html() );
+				$('#dy-wrap').html( template({'doc': doc, 'env': env}) );
+			});
+
+		}
+
+	</script>
+{% endblock %}
+
+
+{% block content %}
+{% raw %}
+<script id="template" type="x-tmpl-mustache">
+<section id="meta">
+	<div class="first">
+		<h2>{{ doc.title }}</h2>
+
+		<div class="sub">
+			<img class="profile" src="https://avatars.githubusercontent.com/u/{{ doc.author.social_uid }}?size=44">
+			<span class="author-name">{{ doc.author.name }}</span>
+			<span class="datetime">
+				{{ ymdhis doc.created }}
+			</span>
+		</div>
+	</div>
+
+	<div class="second">
+		<pre id="description">{{ doc.description }}</pre>
+
+		<div class="tags">
+			<span class="tag tag-special">
+				<a href="/env/{{ doc.env.[0] }}">
+					<span class="env-group">{{ doc.env.[0] }}&gt;</span>
+				</a>
+				<a href="/env/{{ doc.env.[0] }}/{{ doc.env.[1] }}">
+					<span class="env-child">{{ doc.env.[1] }}</span>
+				</a>
+			</span>
+
+			{{#each doc.tags }}
+			<a href="/tag/{{ this }}">
+				<span class="tag">
+					<span>#</span>
+					<span>{{ this }}</span>
+				</span>
+			</a>
+			{{/ each }}
+		</div>
+	</div>
+</section>
+
+<section id="properties">
+	<h3>properties</h3>
+
+	<div class="content">
+		<table>
+			<tbody>
+				{{# if env }}
+					{{# each env.info.properties }}
+						<tr{{{ propertyClass ../doc.properties this.name }}}>
+							<td class="key">{{ this.name }}</td>
+							<td class="value">
+								<span>{{ getProperty ../doc.properties this.name }}</span>
+							</td>
+						</tr>
+						{{/ each }}
+
+					{{ else }}
+						{{# each doc.properties }}
+						<tr>
+							<td class="key">{{ @key }}</td>
+							<td class="value">
+								<span>{{ this }}</span>
+							</td>
+						</tr>
+					{{/ each }}
+				{{/ if }}
+			</tbody>
+		</table>
+	</div>
+</section>
+
+<section id="input">
+	<h3>input</h3>
+
+	<table class="lines">
+		<tbody>
+			<tr>
+				<td class="line-number">
+					{{# each doc.input }}
+					<div class="{{eo @index}}">{{inc @index}}</div>
+					{{/ each }}
+				</td>
+				<td class="data">
+					{{# each doc.input }}
+					<div class="{{eo @index}}">{{ this }}</div>
+					{{/ each }}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</section>
+
+<section id="output">
+	<h3>output</h3>
+	{{#with doc.output}}
+	<table class="lines">
+		{{# if groupType }}
+		<thead>
+			<tr>
+				<th></th>
+				<th></th>
+				{{# each result.columns }}
+					<th>{{ this }}</th>
+				{{/ each }}
+				<th class="space">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{# each result.resultList }}
+				{{# each list }}
+					<tr class="l">
+						{{upit}}
+						{{# if @index }}
+						{{else}}
+							<td class="line-number g1 {{eoit @index}}" rowspan="{{ ../this.list.length }}">
+								<div>{{inc @../index}}</div>
+							</td>
+						{{/ if }}
+
+						<td class="line-number g2 {{eoit}}">
+							<div>{{inc @index}}</div>
+						</td>
+
+						{{# if this }}
+							{{# each this }}
+							<td class="data group-data">
+								<div class="{{eoit}}">{{ this }}</div>
+							</td>
+							{{/ each }}
+
+						{{ else }}
+							<td class="data group-data-null" colspan="{{ ../../../result.columns.length }}">
+								<div class="{{eoit}}">Null</div>
+							</td>
+						{{/ if }}
+
+						<td class="data space"><div class="{{eoit}}">&nbsp;</div></td>
+					</tr>
+				{{/ each }}
+			{{/ each }}
+
+		{{ else }}
+		<!-- STRING or MATCH type -->
+		<tbody>
+			<tr>
+				<td class="line-number">
+					{{# each result.resultList }}
+					<div class="{{eo @index}}">{{inc @index}}</div>
+					{{/ each }}
+				</td>
+				<td class="data">
+					{{# each result.resultList }}
+					<div class="{{eo @index}}">
+						{{# if ../stringType }}
+							{{ this }}
+
+						{{else if ../matchType }}
+							<span class="{{mu this}}">
+								{{#if this}}
+									Matched
+								{{else}}
+									UnMatched
+								{{/if}}
+							</span>
+						{{/ if }}
+					</div>
+					{{/ each }}
+				</td>
+			</tr>
+		</tbody>
+		{{/ if }}
+	</table>
+	{{/with}}
+</section>
+
+</script>
+{% endraw %}
+
+<div id="dy-wrap">
+	<p align="center">Loading..</p>
+</div>
+
+<section id="disqus-wrap">
+	<h3>comments</h3>
+	<div id="disqus_thread"></div>
+	
+	<script type="text/javascript">
+		var disqus_config = function () {
+			this.page.url = 'http://regular.express/share/' + doc.id;
+			this.page.identifier = '/share/' + doc.id;
+		};
+		(function() {
+			var d = document, s = d.createElement('script');
+			s.src = '//regular-express.disqus.com/embed.js';
+			s.setAttribute('data-timestamp', +new Date());
+			(d.head || d.body).appendChild(s);
+		})();
+		</script>
+	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+	<script id="dsq-count-scr" src="//regular-express.disqus.com/count.js" async></script>
+</section>
+{% endblock %}
