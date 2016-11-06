@@ -37,7 +37,7 @@
 	<ul class="properties">
 		{% if doc.env_child.info %}
 			{% for prop in doc.env_child.info.properties %}
-			{% if prop.type != 'hidden' %}
+			{% if prop.type != 'hidden' and prop.name in doc.properties %}
 				{{ property_li(prop.name, doc.properties[ prop.name ]) }}
 			{% endif %}
 			{% endfor %}
