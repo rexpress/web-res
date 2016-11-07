@@ -5,6 +5,19 @@
 {% block head %}
 	{{ super() }}
 	<link rel="stylesheet" type="text/css" href="/css/share_view.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/css/tooltipster.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/css/themes/tooltipster-light.min.css">
+	
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/js/jquery.tooltipster.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.tooltip').tooltipster({
+				theme: 'tooltipster-light'
+			});
+		});
+	</script>
 {% endblock %}
 
 {% block meta %}
@@ -57,7 +70,7 @@
 
 {% if doc.properties %}
 <section id="properties">
-	<h3>properties</h3>
+	<h3><a href="/env/{{ doc.env_group.name }}/{{ doc.env_child.name }}">properties</a></h3>
 
 	<div class="content">
 		<table>
@@ -66,7 +79,10 @@
 					{% for prop in doc.env_child.info.properties %}
 					{% if prop.type != 'hidden' %}
 					<tr{{ ' class="no-value"'|safe if prop.name not in doc.properties }}>
-						<td class="key">{{ prop.name }}</td>
+						<td class="key">
+							<span>{{ prop.name }}</span>
+							<i class="fa fa-question-circle tooltip" aria-hidden="true" title="{{ prop.help }}"></i>
+						</td>
 						<td class="value">
 							<span>{{ doc.properties[ prop.name ] }}</span>
 						</td>
@@ -123,7 +139,7 @@
 		<thead>
 			<tr>
 				<th></th>
-				<th></th>
+				
 				{% for col in doc.output.result.columns %}
 					<th>{{ col }}</th>
 				{% endfor %}
@@ -144,14 +160,11 @@
 
 					<tr{{ ' class="l"'|safe if loop.last }}>
 						{% if loop.index == 1 %}
-							<td class="line-number g1 {{ eo }}" rowspan="{{ loop.length }}">
+							<td class="line-number {{ eo }}" rowspan="{{ loop.length }}">
 								<div>{{ loop2.index }}</div>
 							</td>
 						{% endif %}
 
-						<td class="line-number g2 {{ eo }}">
-							<div>{{ loop.index }}</div>
-						</td>
 
 						{% if d2 %}
 							{% for data in d2 %}

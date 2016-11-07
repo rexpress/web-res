@@ -5,9 +5,13 @@
 {% block head %}
 	{{ super() }}
 	<link rel="stylesheet" type="text/css" href="/css/share_view.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/css/tooltipster.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/css/themes/tooltipster-light.min.css">
+	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/json2/20160511/json2.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/js/jquery.tooltipster.min.js"></script>
 	
 	<script type="text/javascript">
 		var docs = [{% for o in shares.docs %}"{{ o._id }}"{% if not loop.last %},{% endif %}{% endfor %}];
@@ -70,9 +74,6 @@
 			});
 
 
-
-
-
 			$.ajax({
 				'type': 'GET',
 				'url': 'https://rexpress.cloudant.com/re/_design/share/_view/share?keys=["' + docId + '"]&include_docs=true',
@@ -108,15 +109,15 @@
 						doc.output.result.resultList[i] = { 'list': [ null ] };
 				}
 
-				// console.log(doc);
-				// console.log(env);
-
 				var template = Handlebars.compile( $('#template').html() );
 				$('#dy-wrap').html( template({'doc': doc, 'env': env}) );
+
+				$('.tooltip').tooltipster({
+					theme: 'tooltipster-light'
+				});
 			});
 
 		}
-
 	</script>
 {% endblock %}
 
@@ -163,7 +164,7 @@
 </section>
 
 <section id="properties">
-	<h3>properties</h3>
+	<h3><a href="/env/{{ doc.env.[0] }}/{{ doc.env.[1] }}">properties</a></h3>
 
 	<div class="content">
 		<table>
@@ -171,7 +172,10 @@
 				{{# if env }}
 					{{# each env.info.properties }}
 						<tr{{{ propertyClass ../doc.properties this.name }}}>
-							<td class="key">{{ this.name }}</td>
+							<td class="key">
+								<span>{{ this.name }}</span>
+								<i class="fa fa-question-circle tooltip" aria-hidden="true" title="{{ this.help }}"></i>
+							</td>
 							<td class="value">
 								<span>{{ getProperty ../doc.properties this.name }}</span>
 							</td>
@@ -236,14 +240,10 @@
 						{{upit}}
 						{{# if @index }}
 						{{else}}
-							<td class="line-number g1 {{eoit @index}}" rowspan="{{ ../this.list.length }}">
+							<td class="line-number {{eoit @index}}" rowspan="{{ ../this.list.length }}">
 								<div>{{inc @../index}}</div>
 							</td>
 						{{/ if }}
-
-						<td class="line-number g2 {{eoit}}">
-							<div>{{inc @index}}</div>
-						</td>
 
 						{{# if this }}
 							{{# each this }}
