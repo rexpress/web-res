@@ -47,6 +47,7 @@
 				{% if property.type != 'hidden' %}
 				<li class="clearfix">
 					<div class="fl key">
+						{% if property.required %}<span class="required">*</span>{% endif %}
 						<span class="type">{{ property.type }}</span>
 						<span class="name">{{ property.name }}</span>
 					</div>
