@@ -23,12 +23,17 @@ def process_shares(shares, envinfo) :
 	for index, data in enumerate(shares) :
 		if index % 2 == 1 : continue
 
-		o = data['doc']
-		o['author'] = shares[index+1]['doc']
-		o['env_group'] = envinfo.getdict(o['env'][0], loose_mode=True)
-		o['env_child'] = envinfo.getdict(o['env'][0], o['env'][1], loose_mode=True)
+		try :
+			o = data['doc']
+			o['author'] = shares[index+1]['doc']
+			o['env_group'] = envinfo.getdict(o['env'][0], loose_mode=True)
+			o['env_child'] = envinfo.getdict(o['env'][0], o['env'][1], loose_mode=True)
 
-		output.append(o)
+		except Exception :
+			pass
+
+		else :
+			output.append(o)
 
 	return output
 
