@@ -22,6 +22,7 @@
 				'news': [
 					{% for data in new_env_shares %}
 						{% set env_name = data.key[0] %}
+						{% if env_name %}
 						{
 							'env': {{ envinfo.getdict(env_name) }},
 							'data': {{ ext.process_shares(
@@ -29,6 +30,7 @@
 								envinfo = envinfo,
 							) }}
 						},
+						{% endif %}
 					{% endfor %}
 				],
 				'tags': [
