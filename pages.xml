@@ -97,14 +97,14 @@
 	{% for tag in tags.rows %}
 	<page>
 		<url>/tag/{{ tag.key }}/</url>
-		<context>
-			{{ {
+		<context type="json">
+			{{ ext.json2({
 				'tag'   : tag.key,
 				'shares': ext.process_shares(
 					model.macro('#view-range', 'tag', 'shares', tag.key).rows,
 					envinfo = envinfo,
 				)
-			} }}
+			}) }}
 		</context>
 		<template>list_tag.html</template>
 	</page>

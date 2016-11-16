@@ -7,6 +7,7 @@
 	:author: Prev(prevdev@gmail.com)
 """
 
+import ast
 
 class EnvInfo :
 	def __init__(self, model) :
@@ -48,10 +49,12 @@ class EnvInfo :
 		eg = self.data[ group ]
 
 		if child is None :
+			eg = ast.literal_eval( str(eg) )
 			return eg
 		else :
 			c = eg.get_child(child)
 			if c is not None :
+				c = ast.literal_eval( str(c) )
 				return c
 			else :
 				if loose_mode : return {'name': child}

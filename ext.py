@@ -52,29 +52,30 @@ def env_icon(icon_info) :
 		return None
 
 
-def escape_html(obj) :
-	if type(obj) == dict :
-		for key, val in obj.items() :
-			obj[key] = escape_html(val)
+# def escape_html(obj) :
+# 	if type(obj) == dict :
+# 		for key, val in obj.items() :
+# 			obj[key] = escape_html(val)
 
-	elif type(obj) == list :
-		for index, val in enumerate(obj) :
-			obj[index] = escape_html(val)
+# 	elif type(obj) == list :
+# 		for index, val in enumerate(obj) :
+# 			obj[index] = escape_html(val)
 	
-	elif type(obj) == str:
-		import html
-		return html.escape(obj)
+# 	elif type(obj) == str:
+# 		obj = obj.replace('"', '\\\"')
+# 		return obj
 
-	return obj
-
+# 	return obj
 
 
 
 def json2(o) :
-	import json, ast, html
+	import json, html, ast
 
-	o = escape_html(o)
-	d = ast.literal_eval( str( o ) )
-	return json.dumps( d )
+	o = ast.literal_eval( repr( o ) )
+	s = json.dumps( o )
+
+	s = html.escape(s)
+	return s
 
 
