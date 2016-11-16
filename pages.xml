@@ -17,26 +17,28 @@
 	{% set new_env_shares = model.macro('#view', 'env', 'envs', 'group_level=1').rows | sort(attribute='value.max', reverse=True) %}
 	<page>
 		<url>/</url>
-		<context>
+		<context type="json">
 			{
-				'news': [
+				"news": [
 					{% for data in new_env_shares %}
 						{% set env_name = data.key[0] %}
 						{% if env_name %}
 						{
-							'env': {{ envinfo.getdict(env_name) }},
-							'data': {{ ext.process_shares(
+							"env": {{ ext.json2(envinfo.getdict(env_name)) }},
+							"data": {{ ext.json2(ext.process_shares(
 								model.macro('#view-range10', 'env', 'shares', env_name).rows,
 								envinfo = envinfo,
-							) }}
-						},
+							)) }}
+						}
+						{% if not loop.last %},{% endif %}
 						{% endif %}
 					{% endfor %}
 				],
-				'tags': [
+				"tags": [
 					{% for tag in tags.rows | sort(attribute='value.count', reverse=True)  %}
 						{% if loop.index <= 10 %}
-							'{{ tag.key }}',
+							"{{ tag.key }}"
+							{% if not loop.last and loop.index < 10 %},{% endif %}
 						{% endif %}
 					{% endfor %}
 				]
@@ -59,13 +61,14 @@
 	{% for group in envinfo.groups.values() %}
 		<page>
 			<url>/env/{{ group.name }}/</url>
-			<context>{{ {
-				'env'    : group,
-				'shares' : ext.process_shares(
-					model.macro('#view-range', 'env', 'shares', group.name).rows,
-					envinfo = envinfo,
-				)
-			} }}
+			<context type="json">
+				{{ ext.json2({
+					'env'    : group,
+					'shares' : ext.process_shares(
+						model.macro('#view-range', 'env', 'shares', group.name).rows,
+						envinfo = envinfo,
+					)
+				}) }}
 			</context>
 			<template>list_env_group.html</template>
 		</page>
@@ -74,13 +77,15 @@
 		{% for child in group.children.values() %}
 			<page>
 				<url>/env/{{ group.name }}/{{ child.name }}/</url>
-				<context>{{ {
-					'env'    : child,
-					'shares' : ext.process_shares(
-						model.macro('#view-range', 'env', 'shares', group.name + '","' + child.name).rows,
-						envinfo = envinfo,
-					)
-				} }}</context>
+				<context type="json">
+					{{ ext.json2({
+						'env'    : child,
+						'shares' : ext.process_shares(
+							model.macro('#view-range', 'env', 'shares', group.name + '","' + child.name).rows,
+							envinfo = envinfo,
+						)
+					}) }}
+				</context>
 				<template>list_env_child.html</template>
 			</page>
 		{% endfor %}
@@ -122,7 +127,7 @@
 		{% set share_doc = ext.process_shares(d, envinfo)[0] %}
 		<page>
 			<url>/share/{{ share_doc._id }}/</url>
-			<context>{{ {'doc': share_doc} }}</context>
+			<context type="json">{{ ext.json2({'doc': share_doc}) }}</context>
 			<template>share_view.html</template>
 		</page>
 	{% endfor %}
