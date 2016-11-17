@@ -173,6 +173,7 @@
 					{{# each env.info.properties }}
 						<tr{{{ propertyClass ../doc.properties this.name }}}>
 							<td class="key">
+								{{# if this.required }}<span class="required">*</span>{{/ if }}
 								<span>{{ this.name }}</span>
 								<i class="fa fa-question-circle tooltip" aria-hidden="true" title="{{ this.help }}"></i>
 							</td>

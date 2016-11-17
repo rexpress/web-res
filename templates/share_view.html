@@ -80,6 +80,7 @@
 					{% if prop.type != 'hidden' %}
 					<tr{{ ' class="no-value"'|safe if prop.name not in doc.properties }}>
 						<td class="key">
+							{% if prop.required %}<span class="required">*</span>{% endif %}
 							<span>{{ prop.name }}</span>
 							<i class="fa fa-question-circle tooltip" aria-hidden="true" title="{{ prop.help }}"></i>
 						</td>

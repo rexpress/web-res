@@ -3,7 +3,7 @@
 		"type": "cloudant",
 		"baseurl": "https://rexpress.cloudant.com/",
 		"headers": {
-			"Authorization": "Basic YWJpdHlwaWNoZWRkaXNseWRpdHNwYXRlOjYzYjlkNjFlOTY1YmFiNzRhNDBmZTYwODg1YmFmZjllNDk1OWQyMGE="
+			"Authorization": ""
 		}
 	},
 
