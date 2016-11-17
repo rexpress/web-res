@@ -1,0 +1,73 @@
+{% extends "/layout/default.html" %}
+
+{% block title %}Download - regular.express{% endblock %}
+
+{% block head %}
+	{{ super() }}
+	<link rel="stylesheet" type="text/css" href="/css/download.css">
+{% endblock %}
+
+
+{% block meta %}
+	<meta name="Description" content="Regex tester that run codes in fully isoloated environment in docker"> 
+	<meta property="og:description" content="Regex tester that run codes in fully isoloated environment in docker">
+{% endblock %}
+
+
+{% block content %}
+
+<section id="download">
+	<h2 class="ctr">Test regex in fully isolated environment</h2>
+	<p>
+		You can use our app to test regular expressions.<br>
+		Cause all module and environments run in docker, testing process never effect to your developing environment.
+	</p>
+	<p>
+		We support basic environments like python, java, nodejs, and php.<br>And besides, we support regular expressions in special modules like flume, hive, and nginx.
+	</p>
+	<div>
+		<img src="/images/magaret-screenshot1-1.png" width="800">
+	</div>
+
+	<div class="buttons">
+		<a href="#mac">
+			<span class="sub">Download for</span><br>
+			<span class="large">MacOS</span>
+		</a>
+		<a href="#win">
+			<span class="sub">Download for</span><br>
+			<span class="large">Windows</span>
+		</a>
+	</div>
+</section>
+
+<section id="developers">
+	<h2 class="ctr">for advanced developer</h2>
+	<p>
+		regular.express desktop tester (project name <strong>magaret</strong>) is developed with electron/nodejs.<br>
+		You can install this app with npm.
+	</p>
+
+	<code>
+$ git clone https://github.com/rexpress/magaret.git
+$ cd magaret
+$ npm install
+$ npm start
+	</code>
+
+	<div class="buttons">
+		<a href="https://github.com/rexpress/magaret" class="github">
+			See in Github
+		</a>
+	</div>
+
+	<p class="top-line">
+		Our all source codes are open source.<br>
+		You can see our codes, make pull requests, and submit issues, too.
+	</p>
+	<p>
+		regular.express could always use more contributers!
+	</p>
+</section>
+
+{% endblock %}

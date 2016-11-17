@@ -173,8 +173,8 @@
 	</page>
 
 	<page>
-		<url>/doc/</url>
-		<template>_under_cons.html</template>
+		<url>/download/</url>
+		<template>download.html</template>
 	</page>
 
 </site>
