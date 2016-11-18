@@ -56,7 +56,7 @@
 				return object[property];
 			});
 			Handlebars.registerHelper('propertyClass', function(object, property, options) {
-				if (property in object) return '';
+				if (object && property in object) return '';
 				else return ' class="no-value"';
 			});
 
