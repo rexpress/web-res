@@ -53,6 +53,7 @@
 				else return 'u';
 			});
 			Handlebars.registerHelper('getProperty', function(object, property, options) {
+				if (!object) return '';
 				return object[property];
 			});
 			Handlebars.registerHelper('propertyClass', function(object, property, options) {
