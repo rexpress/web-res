@@ -89,6 +89,7 @@
 
 				var doc = data.rows[0].doc;
 				doc.author = data.rows[1].doc;
+				if (!doc.title) doc.title = "Untitled";
 				var env;
 
 				try {

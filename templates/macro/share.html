@@ -10,7 +10,7 @@
 <div class="share-tile">
 	<a href="/share/{{ doc._id }}">
 		<h4>
-			{{ doc.title }}
+			{{ doc.title|default('Untitled') }}
 		</h4>
 		<div class="description">
 			{{ doc.description }}

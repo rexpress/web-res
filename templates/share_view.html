@@ -32,7 +32,7 @@
 {% block content %}
 <section id="meta">
 	<div class="first">
-		<h2>{{ doc.title }}</h2>
+		<h2>{{ doc.title|default('Untitled') }}</h2>
 
 		<div class="sub">
 			<img class="profile" src="https://avatars.githubusercontent.com/u/{{ doc.author.social_uid }}?size=44">
