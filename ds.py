@@ -23,11 +23,13 @@ class EnvInfo :
 			env_group = p[0]
 			env_child = p[1].split('.json')[0]
 
+			if env_group not in self.data :
+				self.data[ env_group ] = EnvGroup()
+
+
 			if env_child == '_info' :
-				self.data[ env_group ] = EnvGroup(
-					name = env_group,
-					info = model.macro('#git-env', env_group + '/_info.json#' + info['sha']),
-				)
+				self.data[ env_group ].name = env_group
+				self.data[ env_group ].info = model.macro('#git-env', env_group + '/_info.json#' + info['sha'])
 
 			else :
 				self.data[ env_group ].append_child( EnvChild(
@@ -68,6 +70,7 @@ class EnvInfo :
 
 
 class EnvBase :
+
 	def __init__(self, name, info) :
 		self.name = name
 		self.info = info
@@ -80,7 +83,8 @@ class EnvBase :
 
 
 class EnvGroup(EnvBase) :
-	def __init__(self, name, info) :
+
+	def __init__(self, name=None, info=None) :
 		EnvBase.__init__(self, name, info)
 		self.children = {}
 
