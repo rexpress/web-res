@@ -112,107 +112,110 @@
 
 <section id="input">
 	<h3>input</h3>
-
-	<table class="lines">
-		<tbody>
-			<tr>
-				<td class="line-number">
-					{% for line in doc.input %}
-					<div class="{{ ['e','o'][loop.index % 2] }}">{{ loop.index }}</div>
-					{% endfor %}
-				</td>
-				<td class="data">
-					{% for line in doc.input %}
-					<div class="{{ ['e','o'][loop.index % 2] }}">{{ line }}</div>
-					{% endfor %}
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<div>
+		<table class="lines">
+			<tbody>
+				<tr>
+					<td class="line-number">
+						{% for line in doc.input %}
+						<div class="{{ ['e','o'][loop.index % 2] }}">{{ loop.index }}</div>
+						{% endfor %}
+					</td>
+					<td class="data">
+						{% for line in doc.input %}
+						<div class="{{ ['e','o'][loop.index % 2] }}">{{ line }}</div>
+						{% endfor %}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </section>
 
 <section id="output">
 	<h3>output</h3>
-	<table class="lines">
-		{% set type = doc.output.type %}
-		{% if type == 'GROUP' %}
-		<!-- GROUP type -->
-		<thead>
-			<tr>
-				<th></th>
-				
-				{% for col in doc.output.result.columns %}
-					<th>{{ col }}</th>
-				{% endfor %}
-				<th class="space">&nbsp;</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% set i = 0 %}
+	<div>
+		<table class="lines">
+			{% set type = doc.output.type %}
+			{% if type == 'GROUP' %}
+			<!-- GROUP type -->
+			<thead>
+				<tr>
+					<th></th>
+					
+					{% for col in doc.output.result.columns %}
+						<th>{{ col }}</th>
+					{% endfor %}
+					<th class="space">&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% set i = 0 %}
 
-			{% for dataset in doc.output.result.resultList %}
-				{% if dataset == None %}{% set dataset = {'list':[None]} %}{% endif %}
-				{% set loop2 = loop %}
-				{% set i = i+1 %}
-
-				{% for d2 in dataset.list %}
-					{% set eo = ['e','o'][i % 2] %}
+				{% for dataset in doc.output.result.resultList %}
+					{% if dataset == None %}{% set dataset = {'list':[None]} %}{% endif %}
+					{% set loop2 = loop %}
 					{% set i = i+1 %}
 
-					<tr{{ ' class="l"'|safe if loop.last }}>
-						{% if loop.index == 1 %}
-							<td class="line-number {{ eo }}" rowspan="{{ loop.length }}">
-								<div>{{ loop2.index }}</div>
-							</td>
-						{% endif %}
+					{% for d2 in dataset.list %}
+						{% set eo = ['e','o'][i % 2] %}
+						{% set i = i+1 %}
+
+						<tr{{ ' class="l"'|safe if loop.last }}>
+							{% if loop.index == 1 %}
+								<td class="line-number {{ eo }}" rowspan="{{ loop.length }}">
+									<div>{{ loop2.index }}</div>
+								</td>
+							{% endif %}
 
 
-						{% if d2 %}
-							{% for data in d2 %}
-							<td class="data group-data">
-								<div class="{{ eo }}">{{ data }}</div>
-							</td>
-							{% endfor %}
+							{% if d2 %}
+								{% for data in d2 %}
+								<td class="data group-data">
+									<div class="{{ eo }}">{{ data }}</div>
+								</td>
+								{% endfor %}
 
-						{% else %}
-							<td class="data group-data-null" colspan="{{ doc.output.result.columns|length }}">
-								<div class="{{ eo }}">Null</div>
-							</td>
-						{% endif %}
+							{% else %}
+								<td class="data group-data-null" colspan="{{ doc.output.result.columns|length }}">
+									<div class="{{ eo }}">Null</div>
+								</td>
+							{% endif %}
 
-						<td class="data space"><div class="{{ eo }}">&nbsp;</div></td>
-					</tr>
+							<td class="data space"><div class="{{ eo }}">&nbsp;</div></td>
+						</tr>
+					{% endfor %}
 				{% endfor %}
-			{% endfor %}
 
 
-		{% else %}
-		<!-- STRING or MATCH type -->
-		<tbody>
-			<tr>
-				<td class="line-number">
-					{% for line in doc.output.result.resultList %}
-					<div class="{{ ['e','o'][loop.index % 2] }}">{{ loop.index }}</div>
-					{% endfor %}
-				</td>
-				<td class="data">
-					{% for line in doc.output.result.resultList %}
-					<div class="{{ ['e','o'][loop.index % 2] }}">
-						{% if type == 'STRING' %}
-							{{ line|e|default('&nbsp;', True)|safe }}
+			{% else %}
+			<!-- STRING or MATCH type -->
+			<tbody>
+				<tr>
+					<td class="line-number">
+						{% for line in doc.output.result.resultList %}
+						<div class="{{ ['e','o'][loop.index % 2] }}">{{ loop.index }}</div>
+						{% endfor %}
+					</td>
+					<td class="data">
+						{% for line in doc.output.result.resultList %}
+						<div class="{{ ['e','o'][loop.index % 2] }}">
+							{% if type == 'STRING' %}
+								{{ line|e|default('&nbsp;', True)|safe }}
 
-						{% elif type == 'MATCH' %}
-							<span class="{{ 'm' if line else 'u' }}">{{ 'Matched' if line else 'UnMatched' }}</span>
-						{% endif %}
+							{% elif type == 'MATCH' %}
+								<span class="{{ 'm' if line else 'u' }}">{{ 'Matched' if line else 'UnMatched' }}</span>
+							{% endif %}
 
-					</div>
-					{% endfor %}
-				</td>
-			</tr>
-		</tbody>
-		{% endif %}
-		
-	</table>
+						</div>
+						{% endfor %}
+					</td>
+				</tr>
+			</tbody>
+			{% endif %}
+			
+		</table>
+	</div>
 </section>
 
 <section id="disqus-wrap">

@@ -202,100 +202,103 @@
 
 <section id="input">
 	<h3>input</h3>
-
-	<table class="lines">
-		<tbody>
-			<tr>
-				<td class="line-number">
-					{{# each doc.input }}
-					<div class="{{eo @index}}">{{inc @index}}</div>
-					{{/ each }}
-				</td>
-				<td class="data">
-					{{# each doc.input }}
-					<div class="{{eo @index}}">{{ this }}</div>
-					{{/ each }}
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<div>
+		<table class="lines">
+			<tbody>
+				<tr>
+					<td class="line-number">
+						{{# each doc.input }}
+						<div class="{{eo @index}}">{{inc @index}}</div>
+						{{/ each }}
+					</td>
+					<td class="data">
+						{{# each doc.input }}
+						<div class="{{eo @index}}">{{ this }}</div>
+						{{/ each }}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </section>
 
 <section id="output">
 	<h3>output</h3>
 	{{#with doc.output}}
-	<table class="lines">
-		{{# if groupType }}
-		<thead>
-			<tr>
-				<th></th>
-				{{# each result.columns }}
-					<th>{{ this }}</th>
-				{{/ each }}
-				<th class="space">&nbsp;</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{# each result.resultList }}
-				{{# each list }}
-					<tr class="l">
-						{{upit}}
-						{{# if @index }}
-						{{else}}
-							<td class="line-number {{eoit @index}}" rowspan="{{ ../this.list.length }}">
-								<div>{{inc @../index}}</div>
-							</td>
-						{{/ if }}
-
-						{{# if this }}
-							{{# each this }}
-							<td class="data group-data">
-								<div class="{{eoit}}">{{ this }}</div>
-							</td>
-							{{/ each }}
-
-						{{ else }}
-							<td class="data group-data-null" colspan="{{ ../../../result.columns.length }}">
-								<div class="{{eoit}}">Null</div>
-							</td>
-						{{/ if }}
-
-						<td class="data space"><div class="{{eoit}}">&nbsp;</div></td>
-					</tr>
-				{{/ each }}
-			{{/ each }}
-
-		{{ else }}
-		<!-- STRING or MATCH type -->
-		<tbody>
-			<tr>
-				<td class="line-number">
-					{{# each result.resultList }}
-					<div class="{{eo @index}}">{{inc @index}}</div>
+	<div>
+		<table class="lines">
+			{{# if groupType }}
+			<thead>
+				<tr>
+					<th></th>
+					{{# each result.columns }}
+						<th>{{ this }}</th>
 					{{/ each }}
-				</td>
-				<td class="data">
-					{{# each result.resultList }}
-					<div class="{{eo @index}}">
-						{{# if ../stringType }}
-							{{ this }}
+					<th class="space">&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{# each result.resultList }}
+					{{# each list }}
+						<tr class="l">
+							{{upit}}
+							{{# if @index }}
+							{{else}}
+								<td class="line-number {{eoit @index}}" rowspan="{{ ../this.list.length }}">
+									<div>{{inc @../index}}</div>
+								</td>
+							{{/ if }}
 
-						{{else if ../matchType }}
-							<span class="{{mu this}}">
-								{{#if this}}
-									Matched
-								{{else}}
-									UnMatched
-								{{/if}}
-							</span>
-						{{/ if }}
-					</div>
+							{{# if this }}
+								{{# each this }}
+								<td class="data group-data">
+									<div class="{{eoit}}">{{ this }}</div>
+								</td>
+								{{/ each }}
+
+							{{ else }}
+								<td class="data group-data-null" colspan="{{ ../../../result.columns.length }}">
+									<div class="{{eoit}}">Null</div>
+								</td>
+							{{/ if }}
+
+							<td class="data space"><div class="{{eoit}}">&nbsp;</div></td>
+						</tr>
 					{{/ each }}
-				</td>
-			</tr>
-		</tbody>
-		{{/ if }}
-	</table>
+				{{/ each }}
+
+			{{ else }}
+			<!-- STRING or MATCH type -->
+			<tbody>
+				<tr>
+					<td class="line-number">
+						{{# each result.resultList }}
+						<div class="{{eo @index}}">{{inc @index}}</div>
+						{{/ each }}
+					</td>
+					<td class="data">
+						{{# each result.resultList }}
+						<div class="{{eo @index}}">
+							{{# if ../stringType }}
+								{{ this }}
+
+							{{else if ../matchType }}
+								<span class="{{mu this}}">
+									{{#if this}}
+										Matched
+									{{else}}
+										UnMatched
+									{{/if}}
+								</span>
+							{{/ if }}
+						</div>
+						{{/ each }}
+					</td>
+				</tr>
+			</tbody>
+			{{/ if }}
+		</table>
+	</div>
 	{{/with}}
 </section>
 
