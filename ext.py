@@ -29,7 +29,8 @@ def process_shares(shares, envinfo) :
 			o['env_group'] = envinfo.getdict(o['env'][0], loose_mode=True)
 			o['env_child'] = envinfo.getdict(o['env'][0], o['env'][1], loose_mode=True)
 
-		except Exception :
+		except Exception as e:
+			print(e)
 			pass
 
 		else :
