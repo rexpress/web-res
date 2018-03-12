@@ -3,13 +3,13 @@
 		"type": "cloudant",
 		"baseurl": "https://rexpress.cloudant.com/",
 		"headers": {
-			"Authorization": ""
+			"Authorization": "Basic b3V0aW91cnN0YW5kZXZpc3NlZGxlZGxvOmQzNTEwYmI0YzAzYmNjNzI2NjZlMmI0YzBiMTExMjZmNmY0NDc0MDk="
 		}
 	},
 
 	"path": {
 		"template": "templates",
-		"output": "generated",
+		"output": "rexpress.github.io",
 		"assets": ["assets"],
 		"pages_xml": "pages.xml"
 	},

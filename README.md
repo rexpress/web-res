@@ -1,4 +1,4 @@
-#rexpress/web-res
+# rexpress/web-res
 
 Web resources be used in **http://regular.express**
 
@@ -8,12 +8,12 @@ Web resources be used in **http://regular.express**
 
 ### Dependency
 
-Web site is rendered with **[Jikji](https://github.com/Prev/jikji)** (Static website generator based on RESTFul Server).
+Web site is rendered with **[Jikji v0.5](https://github.com/Prev/jikji/tree/0.5)** (Static website generator based on RESTFul Server).
 
 `jikji` use [Jinja2](http://jinja.pocoo.org/) template engine which is used in [Flask](http://flask.pocoo.org/).
 You can see jinja template documentation on [here](http://jinja.pocoo.org/docs/dev/templates/).
 
-Environment datas are loaded from [rexpress/environments](https://github.com/rexpress/environments).
+Environment datas are loaded from repository [rexpress/environments](https://github.com/rexpress/environments).
 
 
 
@@ -29,6 +29,6 @@ Environment datas are loaded from [rexpress/environments](https://github.com/rex
 
 ###  Build
 
-[regular.express](http://regular.express) is built automatically for every hour by Jenkins.
+<del>[regular.express](http://regular.express) is built automatically for every hour by Jenkins.</del> Currently stopped.
 
 Commits in the `master` branch will be reflected as soon as they are built.
